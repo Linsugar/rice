@@ -192,10 +192,102 @@ class _HomeWidgetState extends State<HomeWidget> {
                 );
               }),
             ),
-            Container(margin: EdgeInsets.only(left: 10),child: Text("最新雇佣",style: TextStyle(color: Colors.white),)),
+            Container(margin: EdgeInsets.only(left: 10),child:Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Text("最新雇佣",style: TextStyle(color: Colors.white),),
+              Container(
+                margin: EdgeInsets.only(left: 5),
+                padding:EdgeInsets.all(1) ,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Colors.deepOrange,Colors.red]
+                ),
+                ),
+                child: Text("new",style: TextStyle(color: Colors.black,fontSize: 10)),)
+            ],)),
             Container(
               height: 230,
-              color: _color,
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(60, 70, 109, 1),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Column(
+                children: [
+                  Expanded(flex: 2,child: Container(
+                    padding: EdgeInsets.only(left: 10,right: 10), child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          FaIcon(FontAwesomeIcons.clock,color: Colors.lightBlue,),
+                          SizedBox(width: 10,),
+                          Text("11点场",style: TextStyle(color: Colors.white),)
+                        ],
+                      ),
+                      Text("未开始")
+                    ],
+                  ),)),
+                  Expanded(flex: 6,child: Container(child: Row(
+                    children: [
+                      Expanded(flex: 4,child: CircleAvatar(
+                        radius: size.width/6,
+                        backgroundColor: Colors.lightBlue,
+                        child:CircleAvatar(
+                          radius: size.width/8,
+                          backgroundColor:_color,
+                          child: Text("0%"),
+                        ),
+                      )),
+                      Expanded(flex:6,child: Container(
+                        child:
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("活动名称：***"),
+                            Text("雇佣期数：第***期"),
+                            Text("雇佣数量：1~1000 米币"),
+                            Text("开始时间：09-12 11:11:30"),
+                            SizedBox(height: 20,)
+                          ],
+                        ),)),
+
+                    ],
+                  ),)),
+                  Expanded(flex: 2,child: Container(
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(" 距开始还有:"),
+                          Text("14:55:40",style: TextStyle(color: Colors.lightBlueAccent,fontWeight: FontWeight.w900),),
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(right: 10,bottom: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.lightBlue,
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: LinearGradient(
+                            colors: [Colors.lightBlueAccent,Colors.blue]
+                          )
+                        ),
+                        child: MaterialButton(onPressed: (){},child: Text("参与雇佣"),),
+                      )
+                    ],
+                  ),)),
+                ],
+              ),
+
             )
           ],),));
   }
@@ -232,8 +324,6 @@ class ImageSliderDemo extends StatelessWidget {
     );
   }
 }
-
-
 
 class Anima extends StatefulWidget {
   const Anima({Key? key}) : super(key: key);
