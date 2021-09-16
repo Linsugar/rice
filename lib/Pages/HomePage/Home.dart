@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../HirePage/Hire.dart';
+import '../MarkPage/Mark.dart';
 final StateProvider<int> bottomIndex = StateProvider((ref) => 0);
 
 class Home extends ConsumerStatefulWidget {
@@ -17,8 +18,7 @@ class Home extends ConsumerStatefulWidget {
 
 class HomeState extends ConsumerState<Home>{
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
-  List<Widget> TabList= [HomeWidget(),Hire(),Text("222"),Text("333")];
-
+  List<Widget> TabList= [HomeWidget(),Hire(),Mark(),Text("333")];
   @override
   Widget build(BuildContext context) {
     final  _index = ref.watch(bottomIndex).state;
@@ -30,6 +30,7 @@ class HomeState extends ConsumerState<Home>{
         children: TabList,
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(41, 55, 78, 1),
         child:SizedBox(
           height: 50,
           child:  Row(
