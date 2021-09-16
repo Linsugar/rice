@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice/Pages/LoginPage/Login.dart';
-final count_down = StateProvider.autoDispose((ref) =>10);
+final count_down = StateProvider.autoDispose((ref) =>5);
 
 
 class Launch extends ConsumerStatefulWidget {
@@ -31,7 +31,6 @@ class _LaunchState extends ConsumerState<Launch> {
      _countdownTimer = Timer.periodic(Duration(seconds: 1),(timer){
       ref.read(count_down).state-=1;
       if(ref.watch(count_down).state==0){
-        print("哈喽");
         _countdownTimer!.cancel();
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
          return login();
@@ -59,7 +58,7 @@ class _LaunchState extends ConsumerState<Launch> {
         child: Stack(
           children: [
             ImageSliderDemo(size),
-            Positioned(top: 20,right: 10,child: GestureDetector(onTap: (){},child: Text("首页${_counter.state}")))
+            Positioned(top: 40,right: 10,child: GestureDetector(onTap: (){},child: Text("首页${_counter.state}")))
           ],
         ),
       ),

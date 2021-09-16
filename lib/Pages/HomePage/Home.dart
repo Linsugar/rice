@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../MinePage/Mine.dart';
 import '../HirePage/Hire.dart';
 import '../MarkPage/Mark.dart';
 final StateProvider<int> bottomIndex = StateProvider((ref) => 0);
@@ -18,7 +19,7 @@ class Home extends ConsumerStatefulWidget {
 
 class HomeState extends ConsumerState<Home>{
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
-  List<Widget> TabList= [HomeWidget(),Hire(),Mark(),Text("333")];
+  List<Widget> TabList= [HomeWidget(),Hire(),Mark(),Mine()];
   @override
   Widget build(BuildContext context) {
     final  _index = ref.watch(bottomIndex).state;
@@ -125,7 +126,7 @@ class _HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMi
               child: ImageSliderDemo(size),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [BoxShadow(color: Colors.black,spreadRadius:0,blurRadius: 2.0,offset:Offset(0.0, 3) )],
+                boxShadow: [BoxShadow(color: Colors.black,blurRadius: 1.0,offset:Offset(0.0, 0.5) )],
               ),
             ),
             Row(

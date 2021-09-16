@@ -51,7 +51,7 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body:Home(),
+        body:Launch(),
       ),
     );
   }
