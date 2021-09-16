@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../HirePage/Hire.dart';
 final StateProvider<int> bottomIndex = StateProvider((ref) => 0);
 
 class Home extends ConsumerStatefulWidget {
@@ -16,7 +17,7 @@ class Home extends ConsumerStatefulWidget {
 
 class HomeState extends ConsumerState<Home>{
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
-  List<Widget> TabList= [HomeWidget(),Text("11"),Text("222"),Text("333")];
+  List<Widget> TabList= [HomeWidget(),Hire(),Text("222"),Text("333")];
 
   @override
   Widget build(BuildContext context) {
