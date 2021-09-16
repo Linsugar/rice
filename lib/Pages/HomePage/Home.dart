@@ -17,13 +17,17 @@ class Home extends ConsumerStatefulWidget {
 class HomeState extends ConsumerState<Home>{
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
   List<Widget> TabList= [HomeWidget(),Text("11"),Text("222"),Text("333")];
+
   @override
   Widget build(BuildContext context) {
     final  _index = ref.watch(bottomIndex).state;
     print("监听到了数据：${_index}");
     // TODO: implement build
     return Scaffold(
-      body:TabList[_index],
+      body:IndexedStack(
+        index: _index,
+        children: TabList,
+      ),
       bottomNavigationBar: BottomAppBar(
         child:SizedBox(
           height: 50,
@@ -94,8 +98,14 @@ class HomeWidget extends StatefulWidget {
   _HomeWidgetState createState() => _HomeWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
+class _HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMixin{
   Color _color = Color.fromRGBO(35, 45, 64, 1);
+  List<dynamic> _listStore = [
+    ["线上市场",3000,1000.00,FaIcon(FontAwesomeIcons.home,color: Colors.white,)],
+    ["线下市场",3000,1000.00,FaIcon(FontAwesomeIcons.home,color: Colors.white,)],
+    ["BPO市场",3000,1000.00,Text("BPO",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)],
+    ["RPO市场",3000,1000.00,Text("RPO",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))],
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -108,7 +118,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: ListView(children: [
             Container(
               width: size.width,
-              height: size.height/4,
+              height: size.height/5,
               margin: EdgeInsets.all(10),
               child: ImageSliderDemo(size),
               decoration: BoxDecoration(
@@ -119,37 +129,67 @@ class _HomeWidgetState extends State<HomeWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  child: MaterialButton(onPressed: (){},
-                    child: Column(
-                      children: [
-                        FaIcon(FontAwesomeIcons.userTie),
-                        Text("宠爱生态")
-                      ],
-                    ),
-                  ),
-                ),
                 MaterialButton(onPressed: (){},
                   child: Column(
                     children: [
-                      FaIcon(FontAwesomeIcons.userTie),
-                      Text("商学院")
+                      Container(
+                        width: size.width/7,
+                        height: size.width/7,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:AssetImage("assets/images/tab1.png")
+                            )
+                        ),
+                      ),
+                      Text("宠爱生态", style: TextStyle(color: Colors.white),)
                     ],
                   ),
                 ),
                 MaterialButton(onPressed: (){},
                   child: Column(
                     children: [
-                      FaIcon(FontAwesomeIcons.userTie),
-                      Text("排行榜")
+                      Container(
+                        width: size.width/7,
+                        height: size.width/7,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:AssetImage("assets/images/tab2.png")
+                            )
+                        ),
+                      ),
+                      Text("宠学院", style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
                 MaterialButton(onPressed: (){},
                   child: Column(
                     children: [
-                      FaIcon(FontAwesomeIcons.userTie),
-                      Text("邀请好友")
+                      Container(
+                        width: size.width/7,
+                        height: size.width/7,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:AssetImage("assets/images/tab3.png")
+                            )
+                        ),
+                      ),
+                      Text("排行榜", style: TextStyle(color: Colors.white))
+                    ],
+                  ),
+                ),
+                MaterialButton(onPressed: (){},
+                  child: Column(
+                    children: [
+                      Container(
+                        width: size.width/7,
+                        height: size.width/7,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:AssetImage("assets/images/tab4.png")
+                            )
+                        ),
+                      ),
+                      Text("邀请好友", style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
@@ -169,7 +209,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromRGBO(61, 79, 113, 1)
+                    color: Color.fromRGBO(60, 70, 109, 1)
                   ),
                   margin: EdgeInsets.all(5),
                   child: Stack(
@@ -180,13 +220,28 @@ class _HomeWidgetState extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("线上市场"),
-                            Text("人数：3000人"),
-                            Text("产出：1000,000"),
+                            Text("${_listStore[index][0]}",style: TextStyle(color: Color.fromRGBO(215, 232, 245, 1)),),
+                            SizedBox(height: 10,),
+                            RichText(text: TextSpan(text: "人数：",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),children: [
+                              TextSpan(text: "${_listStore[index][1]}",style: TextStyle(
+                                letterSpacing: 1.5,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(145, 170, 213, 1))),
+                              TextSpan(text: "人",style: TextStyle(color: Color.fromRGBO(145, 170, 213, 1)))
+                            ]),),
+                            RichText(text: TextSpan(text: "产出：",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),children: [
+                              TextSpan(text: "${_listStore[index][2]}",style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(145, 170, 213, 1))),
+                              TextSpan(text: "米币",style: TextStyle(color: Color.fromRGBO(145, 170, 213, 1)))
+                            ]),),
+                            SizedBox(height: 10,),
                           ],
                         ),
                       ),
-                      Positioned(top: 10,right: 10,child: Anima())
+                      Positioned(top: 10,right: 10,child: Anima(_listStore[index][3]))
                     ],
                   ),
                 );
@@ -203,12 +258,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                   gradient: LinearGradient(
+                    stops: [0.1,0.8],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
-                    colors: [Colors.deepOrange,Colors.red]
+                    colors: [Colors.orangeAccent,Colors.red]
                 ),
                 ),
-                child: Text("new",style: TextStyle(color: Colors.black,fontSize: 10)),)
+                child: Text("new",style: TextStyle(
+                    color: Colors.black,fontSize: 10)),)
             ],)),
             Container(
               height: 230,
@@ -230,7 +287,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           Text("11点场",style: TextStyle(color: Colors.white),)
                         ],
                       ),
-                      Text("未开始")
+                      Text("未开始",style: TextStyle(color: Color.fromRGBO(199, 148, 70, 1)),)
                     ],
                   ),)),
                   Expanded(flex: 6,child: Container(child: Row(
@@ -250,10 +307,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("活动名称：***"),
-                            Text("雇佣期数：第***期"),
-                            Text("雇佣数量：1~1000 米币"),
-                            Text("开始时间：09-12 11:11:30"),
+                            RichText(text: TextSpan(text: "活动名称：",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),children: [
+                              TextSpan(text: "****",style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(145, 170, 213, 1))),
+                            ]),),
+                            RichText(text: TextSpan(text: "雇佣期数：",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),children: [
+                              TextSpan(text: "第****期",style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(145, 170, 213, 1))),
+                            ]),),
+                            RichText(text: TextSpan(text: "雇佣数量：",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),children: [
+                              TextSpan(text: "1~1000 米币",style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(145, 170, 213, 1))),
+                            ]),),
+                            RichText(text: TextSpan(text: "开始时间：",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),children: [
+                              TextSpan(text: "09-16 11:00:00",style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.lightBlueAccent,)),
+                            ]),),
                             SizedBox(height: 20,)
                           ],
                         ),)),
@@ -261,14 +338,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ],
                   ),)),
                   Expanded(flex: 2,child: Container(
-
+                    margin: EdgeInsets.only(left: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(" 距开始还有:"),
+                          Text(" 距开始还有:",style: TextStyle(color: Color.fromRGBO(79, 100, 133, 1)),),
+                          SizedBox(height: 5,),
                           Text("14:55:40",style: TextStyle(color: Colors.lightBlueAccent,fontWeight: FontWeight.w900),),
                         ],
                       ),
@@ -278,6 +356,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           color: Colors.lightBlue,
                           borderRadius: BorderRadius.circular(15),
                           gradient: LinearGradient(
+                            stops: [0.4,0.8],
                             colors: [Colors.lightBlueAccent,Colors.blue]
                           )
                         ),
@@ -291,6 +370,10 @@ class _HomeWidgetState extends State<HomeWidget> {
             )
           ],),));
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class ImageSliderDemo extends StatelessWidget {
@@ -326,7 +409,9 @@ class ImageSliderDemo extends StatelessWidget {
 }
 
 class Anima extends StatefulWidget {
-  const Anima({Key? key}) : super(key: key);
+  Widget newWidget = FaIcon(FontAwesomeIcons.home,color: Colors.white,);
+  Anima(this.newWidget,{Key? key}) : super(key: key);
+
   @override
   _AnimaState createState() => _AnimaState();
 }
@@ -335,8 +420,6 @@ class _AnimaState extends State<Anima> with SingleTickerProviderStateMixin{
   AnimationController ?_animationController;
   Animation<double> ?animation;
   String img = "https://t7.baidu.com/it/u=3527521835,3789150700&fm=193&f=GIF";
-
-
 
   @override
   void initState() {
@@ -358,11 +441,12 @@ class _AnimaState extends State<Anima> with SingleTickerProviderStateMixin{
       animation: animation!,
       builder: (BuildContext context, Widget? child){
         return  Container(
-          width: 20,
-          height: 20,
+          width: 40,
+          height:40,
+          child: Center(child: this.widget.newWidget,),
           decoration: BoxDecoration(
-            image: DecorationImage(image: NetworkImage(img)),
-             borderRadius: BorderRadius.circular(20),
+            color: Color.fromRGBO(28, 171, 234, 1),
+             borderRadius: BorderRadius.circular(40),
             border: Border.all(color: Colors.white38),
             boxShadow: [BoxShadow(color:Colors.white38,spreadRadius:animation!.value)]
           ),
