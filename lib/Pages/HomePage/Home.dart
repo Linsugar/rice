@@ -109,6 +109,12 @@ class _HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMi
     ["BPO市场",3000,1000.00,Text("BPO",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)],
     ["RPO市场",3000,1000.00,Text("RPO",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))],
   ];
+  List<dynamic> _listTab = [
+    [Text("宠爱生态", style: TextStyle(color: Colors.white),),"assets/images/tab1.png","/homeChild"],
+    [Text("宠学院", style: TextStyle(color: Colors.white),),"assets/images/tab1.png","/homeChild"],
+    [Text("排行榜", style: TextStyle(color: Colors.white),),"assets/images/tab1.png","/homeChild"],
+    [Text("邀请好友", style: TextStyle(color: Colors.white),),"assets/images/tab1.png","/homeChild"],
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -132,7 +138,10 @@ class _HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMi
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                MaterialButton(onPressed: (){},
+                for(var i=0;i<4;i++)
+                MaterialButton(onPressed: (){
+                  Navigator.pushNamed(context, _listTab[i][2],arguments: {"title": _listTab[i][0],"index":i});
+                },
                   child: Column(
                     children: [
                       Container(
@@ -140,62 +149,15 @@ class _HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMi
                         height: size.width/7,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image:AssetImage("assets/images/tab1.png")
+                                image:AssetImage(_listTab[i][1])
                             )
                         ),
                       ),
-                      Text("宠爱生态", style: TextStyle(color: Colors.white),)
+                      _listTab[i][0]
                     ],
                   ),
                 ),
-                MaterialButton(onPressed: (){},
-                  child: Column(
-                    children: [
-                      Container(
-                        width: size.width/7,
-                        height: size.width/7,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image:AssetImage("assets/images/tab2.png")
-                            )
-                        ),
-                      ),
-                      Text("宠学院", style: TextStyle(color: Colors.white))
-                    ],
-                  ),
-                ),
-                MaterialButton(onPressed: (){},
-                  child: Column(
-                    children: [
-                      Container(
-                        width: size.width/7,
-                        height: size.width/7,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image:AssetImage("assets/images/tab3.png")
-                            )
-                        ),
-                      ),
-                      Text("排行榜", style: TextStyle(color: Colors.white))
-                    ],
-                  ),
-                ),
-                MaterialButton(onPressed: (){},
-                  child: Column(
-                    children: [
-                      Container(
-                        width: size.width/7,
-                        height: size.width/7,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image:AssetImage("assets/images/tab4.png")
-                            )
-                        ),
-                      ),
-                      Text("邀请好友", style: TextStyle(color: Colors.white))
-                    ],
-                  ),
-                ),
+
               ],
             ),
             Container(

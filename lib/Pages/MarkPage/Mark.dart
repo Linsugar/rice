@@ -11,7 +11,7 @@ class Mark extends StatefulWidget {
 
 class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
   Color _color = Color.fromRGBO(35, 45, 64, 1);
-  Color _tabColor= Color.fromRGBO(50, 65 , 98, 1);
+
   TabController ?_tabController;
   List<Widget> _Tablist = [
     Text("线上市场"),
@@ -41,25 +41,25 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
           ListView(
             padding: EdgeInsets.all(10),
             children: [
-              TabWidget(_size, _tabColor)
+              TabWidget(_size)
             ],
           ),
           ListView(
             padding: EdgeInsets.all(10),
             children: [
-              TabWidget(_size, _tabColor)
+              TabWidget(_size)
             ],
           ),
           ListView(
             padding: EdgeInsets.all(10),
             children: [
-              TabWidget(_size, _tabColor)
+              TabWidget(_size)
             ],
           ),
           ListView(
             padding: EdgeInsets.all(10),
             children: [
-              TabWidget(_size, _tabColor)
+              TabWidget(_size)
             ],
           ),
         ],
@@ -69,7 +69,8 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
 }
 
 
-Widget TabWidget(Size _size,Color _tabColor){
+Widget TabWidget(Size _size){
+  Color _tabColor= Color.fromRGBO(50, 65 , 98, 1);
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
