@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice/Pages/HomePage/Home.dart';
-final StateProvider<int> index = StateProvider((ref) => 0);
+final StateProvider index = StateProvider((ref) => 0);
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);

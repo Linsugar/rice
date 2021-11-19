@@ -1,6 +1,7 @@
 //雇佣页面
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rice/Untils/Eventbus.dart';
 class Hire extends StatefulWidget {
   const Hire({Key? key}) : super(key: key);
 
@@ -10,6 +11,7 @@ class Hire extends StatefulWidget {
 
 class _HireState extends State<Hire> {
   Color _color = Color.fromRGBO(35, 45, 64, 1);
+  UntilEventBus _untilEventBus = UntilEventBus.instance;
 @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -115,7 +117,9 @@ class _HireState extends State<Hire> {
                                    colors: [Colors.lightBlueAccent,Colors.blue]
                                )
                            ),
-                           child: MaterialButton(onPressed: (){},child: Text("参与雇佣"),),
+                           child: MaterialButton(onPressed: (){
+                             _untilEventBus.demoEventBus!.fire("2222");
+                           },child: Text("参与雇佣"),),
                          )
                        ],
                      ),)),

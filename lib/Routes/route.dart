@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rice/PublicWidget/MapLocation.dart';
 import '../Pages/HomePage/Home.dart';
 import '../Pages/HomePage/HomeWidget/HomeChild.dart';
 import '../Pages/RegisterPage/Register.dart';
@@ -7,7 +8,8 @@ class RoutePage{
   static final routeName = {
     "/register":(context,{argument})=>register(),
     "/home":(context,{argument})=>Home(),
-    "/homeChild":(context,{argument})=>HomeChild(argument)
+    "/homeChild":(context,{argument})=>HomeChild(argument),
+    "/map":(context,{argument})=>ShowMapPage()
   };
 
 // ignore: missing_return, top_level_function_literal_block

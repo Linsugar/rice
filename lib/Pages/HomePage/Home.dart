@@ -3,11 +3,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rice/Untils/Eventbus.dart';
 import '../MinePage/Mine.dart';
 import '../HirePage/Hire.dart';
 import '../MarkPage/Mark.dart';
-final StateProvider<int> bottomIndex = StateProvider((ref) => 0);
+import '../../ProviderData/GlobData.dart' as Glob;
+import 'Home2.dart';
 
+final StateProvider bottomIndex = StateProvider((ref) => 0);
 class Home extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -19,13 +22,37 @@ class Home extends ConsumerStatefulWidget {
 
 class HomeState extends ConsumerState<Home>{
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
-  List<Widget> TabList= [HomeWidget(),Hire(),Mark(),Mine()];
+  List<Widget> TabList= [Home2(),Hire(),Mark(),Mine()];
+  UntilEventBus ?_untilEventBus;
+  @override
+  void initState() {
+    _untilEventBus = UntilEventBus.instance;
+    _untilEventBus!.demoEventBus!.on().listen((event) {
+      showDialog(
+          barrierDismissible:false,
+          context: context, builder: (context){
+        return test1();
+      });
+      print("事件监听：$event");
+
+    });
+    // TODO: implement initState
+    super.initState();
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _untilEventBus!.demoEventBus!.destroy();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final  _index = ref.watch(bottomIndex).state;
-    print("监听到了数据：${_index}");
+    final  _index = ref.watch(bottomIndex.state).state;
     // TODO: implement build
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body:IndexedStack(
         index: _index,
         children: TabList,
@@ -38,7 +65,7 @@ class HomeState extends ConsumerState<Home>{
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               MaterialButton(onPressed: (){
-                ref.read(bottomIndex).state=0;
+                ref.read(bottomIndex.state).state=0;
               },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +77,8 @@ class HomeState extends ConsumerState<Home>{
               ),
               MaterialButton(onPressed: (){
                 print("是否点击");
-                ref.read(bottomIndex).state=1;
+                ref.read(bottomIndex.state).state=1;
+                ref.read(Glob.GlobalData.valueString.state).state="测试";
               },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +89,7 @@ class HomeState extends ConsumerState<Home>{
                 ),
               ),
               MaterialButton(onPressed: (){
-                ref.read(bottomIndex).state=2;
+                ref.read(bottomIndex.notifier).state=2;
               },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +100,7 @@ class HomeState extends ConsumerState<Home>{
                 ),
               ),
               MaterialButton(onPressed: (){
-                ref.read(bottomIndex).state=3;
+                ref.read(bottomIndex.notifier).state=3;
               },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -91,6 +119,17 @@ class HomeState extends ConsumerState<Home>{
 
 }
 
+
+Widget test1() {
+  return Center(
+    child: Container(
+      width: 100,
+      height: 100,
+      color: Colors.blueAccent,
+      child: Text("测试"),
+    )
+  );
+}
 
 
 //首页UI

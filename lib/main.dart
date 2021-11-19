@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'Pages/HomePage/Home.dart';
+import 'Pages/HomePage/Home2.dart';
 import 'Pages/LaunchPage/Launch.dart';
 import 'Pages/LoginPage/Login.dart';
 import 'Pages/RegisterPage/Register.dart';
@@ -29,6 +30,9 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+
+  Color _color = Color.fromRGBO(249, 249, 249, 1);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -44,12 +48,14 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        brightness:Brightness.light,
+        // primarySwatch: Colors.red,
       ),
       title: "宠爱",
       onGenerateRoute: RoutePage.onGenerateRoute,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        // backgroundColor: Color(0XFF64D0FF),
         resizeToAvoidBottomInset: false,
         body:Home(),
       ),

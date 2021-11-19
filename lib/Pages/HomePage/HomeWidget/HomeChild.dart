@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class HomeChild extends StatefulWidget {
-  var title;
+  final title;
   HomeChild(this.title,{Key? key}) : super(key: key);
 
   @override
@@ -86,7 +86,7 @@ Widget child1(Size size){
 }
 
 class ImageSliderDemo extends StatelessWidget {
-  var imgList = ["https://t7.baidu.com/it/u=3527521835,3789150700&fm=193&f=GIF","https://t7.baidu.com/it/u=2656393769,4001912254&fm=193&f=GIF"];
+  final imgList = ["https://t7.baidu.com/it/u=3527521835,3789150700&fm=193&f=GIF","https://t7.baidu.com/it/u=2656393769,4001912254&fm=193&f=GIF"];
   Size size;
   ImageSliderDemo(this.size);
   @override
