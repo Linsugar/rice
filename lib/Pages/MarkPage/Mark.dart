@@ -10,14 +10,14 @@ class Mark extends StatefulWidget {
 }
 
 class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
-  Color _color = Color.fromRGBO(35, 45, 64, 1);
+  Color _color = Colors.white;
 
   TabController ?_tabController;
   List<Widget> _Tablist = [
-    Text("线上市场"),
-    Text("线下市场"),
-    Text("BPO市场"),
-    Text("RPO市场"),
+    Text("宠物论坛"),
+    Text("猫咪科普"),
+    Text("狗狗科普"),
+    Text("训宠篇"),
   ];
   @override
   void initState() {
@@ -29,11 +29,13 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: _color,
-      appBar: AppBar(title: Text("市场"),backgroundColor: _color,
+
+      appBar: AppBar(title: Text("论坛",style: TextStyle(color: Colors.black),),backgroundColor: _color,
         bottom:
         TabBar(
-          labelStyle: (TextStyle(height: 3,)),
+          labelStyle: (TextStyle(height: 3,color: Colors.red)),
+            unselectedLabelColor: Colors.black,
+            labelColor: Colors.blue,
             controller: _tabController,tabs: _Tablist),),
       body: TabBarView(
         controller: _tabController,
@@ -70,12 +72,12 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
 
 
 Widget TabWidget(Size _size){
-  Color _tabColor= Color.fromRGBO(50, 65 , 98, 1);
+  Color _tabColor= Colors.orangeAccent;
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: _tabColor,
-        boxShadow: [BoxShadow(color: Colors.black,spreadRadius: 0.2)]
+        boxShadow: [BoxShadow(color: Colors.black45,blurRadius: 3.0,offset: Offset(0.0,2.0))]
     ),
     height: _size.height/6,
     width: _size.width,

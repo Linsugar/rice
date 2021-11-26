@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rice/Pages/ChatPage/Chat.dart';
+import 'package:rice/Pages/PetPage/pet.dart';
 import 'package:rice/Untils/Eventbus.dart';
 import '../MinePage/Mine.dart';
 import '../HirePage/Hire.dart';
@@ -22,8 +24,32 @@ class Home extends ConsumerStatefulWidget {
 
 class HomeState extends ConsumerState<Home>{
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
-  List<Widget> TabList= [Home2(),Hire(),Mark(),Mine()];
+  List<Widget> TabList= [Home2(),Chat(),Pet(),Mark(),Mine()];
   UntilEventBus ?_untilEventBus;
+
+ final List<BottomNavigationBarItem> barItem = [
+    BottomNavigationBarItem(
+      icon: FaIcon(FontAwesomeIcons.paw),
+      label: "首页",
+    ),
+    BottomNavigationBarItem(
+      icon: FaIcon(FontAwesomeIcons.commentDots),
+      label: "聊天",
+    ),
+    BottomNavigationBarItem(
+      icon: FaIcon(FontAwesomeIcons.video),
+      label: "寻宠",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.book),
+      label: "科普",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      label: "个人中心",
+    ),
+  ];
+
   @override
   void initState() {
     _untilEventBus = UntilEventBus.instance;
@@ -57,67 +83,108 @@ class HomeState extends ConsumerState<Home>{
         index: _index,
         children: TabList,
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color.fromRGBO(41, 55, 78, 1),
-        child:SizedBox(
-          height: 50,
-          child:  Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              MaterialButton(onPressed: (){
-                ref.read(bottomIndex.state).state=0;
-              },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.home,color: _index==0?Colors.blue:Colors.black,),
-                    Text("首页")
-                  ],
-                ),
-              ),
-              MaterialButton(onPressed: (){
-                print("是否点击");
-                ref.read(bottomIndex.state).state=1;
-                ref.read(Glob.GlobalData.valueString.state).state="测试";
-              },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.userShield,color: _index==1?Colors.blue:Colors.black,),
-                    Text("雇佣")
-                  ],
-                ),
-              ),
-              MaterialButton(onPressed: (){
-                ref.read(bottomIndex.notifier).state=2;
-              },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.mapMarked,color: _index==2?Colors.blue:Colors.black),
-                    Text("市场")
-                  ],
-                ),
-              ),
-              MaterialButton(onPressed: (){
-                ref.read(bottomIndex.notifier).state=3;
-              },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.userTie,color: _index==3?Colors.blue:Colors.black),
-                    Text("我的")
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.black,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: ref.read(bottomIndex.state).state,
+        onTap: (value){
+          print("选择了$value");
+          ref.read(bottomIndex.state).state=value;
+        },
+        items:barItem,
       ),
     );
   }
 
 }
+
+
+
+
+// SizedBox(
+// height: 50,
+// width: MediaQuery.of(context).size.width,
+// child: Flex(
+// direction: Axis.horizontal,
+// mainAxisAlignment: MainAxisAlignment.spaceAround,
+// children: [
+// Expanded(
+// child: MaterialButton(onPressed: (){
+// ref.read(bottomIndex.state).state=0;
+// },
+// child: Expanded(
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// FaIcon(FontAwesomeIcons.home,color: _index==0?Colors.blue:Colors.black,),
+// Text("首页")
+// ],
+// ),
+// ),
+// ),
+// ),
+// Expanded(
+// child: MaterialButton(onPressed: (){
+// print("是否点击");
+// ref.read(bottomIndex.state).state=1;
+// ref.read(Glob.GlobalData.valueString.state).state="测试";
+// },
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// FaIcon(FontAwesomeIcons.userShield,color: _index==1?Colors.blue:Colors.black,),
+// Text("雇佣")
+// ],
+// ),
+// ),
+// ),
+// Expanded(
+// child: MaterialButton(onPressed: (){
+// ref.read(bottomIndex.notifier).state=2;
+// },
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// FaIcon(FontAwesomeIcons.mapMarked,color: _index==2?Colors.blue:Colors.black),
+// Text("市场")
+// ],
+// ),
+// ),
+// ),
+// Expanded(
+// child: MaterialButton(onPressed: (){
+// ref.read(bottomIndex.notifier).state=3;
+// },
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// FaIcon(FontAwesomeIcons.mapMarked,color: _index==3?Colors.blue:Colors.black),
+// Text("论坛")
+// ],
+// ),
+// ),
+// ),
+// Expanded(flex: 1,
+// child: MaterialButton(onPressed: (){
+// ref.read(bottomIndex.notifier).state=4;
+// },
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// FaIcon(FontAwesomeIcons.userTie,color: _index==4?Colors.blue:Colors.black),
+// Text("我的")
+// ],
+// ),
+// ),
+// ),
+// ],
+// ),
+// )
+
+
+
 
 
 Widget test1() {
