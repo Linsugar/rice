@@ -12,22 +12,24 @@ import '../MarkPage/Mark.dart';
 import '../../ProviderData/GlobData.dart' as Glob;
 import 'Home2.dart';
 
-final StateProvider bottomIndex = StateProvider((ref) => 0);
-class Home extends ConsumerStatefulWidget {
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    // TODO: implement createState
-    return HomeState();
-  }
+final  StateProvider<int> _PageIndex = StateProvider((ref)=>0);
 
+
+class Home extends ConsumerStatefulWidget  {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
 }
 
-class HomeState extends ConsumerState<Home>{
+class _HomeState extends ConsumerState<Home> {
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
   List<Widget> TabList= [Home2(),Chat(),Pet(),Mark(),Mine()];
   UntilEventBus ?_untilEventBus;
+  PageController _pageController = PageController();
 
- final List<BottomNavigationBarItem> barItem = [
+
+  final List<BottomNavigationBarItem> barItem = [
     BottomNavigationBarItem(
       icon: FaIcon(FontAwesomeIcons.paw),
       label: "首页",
@@ -52,6 +54,10 @@ class HomeState extends ConsumerState<Home>{
 
   @override
   void initState() {
+    print("进入home");
+    _pageController.addListener(() {
+      ref.read(_PageIndex.state).state = _pageController.page!.toInt();
+    });
     _untilEventBus = UntilEventBus.instance;
     _untilEventBus!.demoEventBus!.on().listen((event) {
       showDialog(
@@ -76,12 +82,11 @@ class HomeState extends ConsumerState<Home>{
 
   @override
   Widget build(BuildContext context) {
-    final  _index = ref.watch(bottomIndex.state).state;
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body:IndexedStack(
-        index: _index,
+      body:PageView(
+        controller: _pageController,
         children: TabList,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -89,17 +94,18 @@ class HomeState extends ConsumerState<Home>{
         unselectedItemColor: Colors.black,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        currentIndex: ref.read(bottomIndex.state).state,
+        currentIndex:ref.watch(_PageIndex.state).state,
         onTap: (value){
           print("选择了$value");
-          ref.read(bottomIndex.state).state=value;
+          _pageController.jumpToPage(value);
+          ref.read(_PageIndex.state).state = value;
         },
         items:barItem,
       ),
     );
   }
-
 }
+
 
 
 Widget test1() {

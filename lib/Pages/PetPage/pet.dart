@@ -24,6 +24,14 @@ class _PetState extends State<Pet> {
 
    Color  _selectColor = Color.fromRGBO(197,233,234, 1);
    Color  _unselectColor = Color.fromRGBO(241, 217, 205, 1);
+
+   @override
+  void initState() {
+    // TODO: implement initState
+     print("进入pet1111");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;

@@ -55,6 +55,7 @@ class _MineState extends State<Mine> {
   @override
   void initState() {
     // TODO: implement initState
+    print("进入mine");
     super.initState();
   }
   @override

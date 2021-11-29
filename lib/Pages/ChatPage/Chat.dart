@@ -11,7 +11,7 @@ class Chat extends StatefulWidget {
   _ChatState createState() => _ChatState();
 }
 
-class _ChatState extends State<Chat> {
+class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin{
   String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
 
   FocusNode _focus = FocusNode();
@@ -21,9 +21,19 @@ class _ChatState extends State<Chat> {
   void initState() {
     // TODO: implement initState
     var s = Scaffold.of(context).isDrawerOpen;
+    print("进入chat");
     print("s===$s");
     _focus.unfocus();
     super.initState();
+  }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    _focus.unfocus();
+    super.dispose();
   }
 
   @override
@@ -190,4 +200,8 @@ class _ChatState extends State<Chat> {
       ),),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

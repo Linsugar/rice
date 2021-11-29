@@ -3,12 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'Pages/HomePage/Home.dart';
-import 'Pages/HomePage/Home2.dart';
-import 'Pages/LaunchPage/Launch.dart';
-import 'Pages/LoginPage/Login.dart';
-import 'Pages/RegisterPage/Register.dart';
 import 'Routes/route.dart';
 
 void main(){
@@ -27,9 +22,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-
-  Color _color = Color.fromRGBO(249, 249, 249, 1);
-
   @override
   void initState() {
     // TODO: implement initState
@@ -38,7 +30,16 @@ class _MainAppState extends State<MainApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
     ]);
+
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print("22231232");
+    super.dispose();
   }
 
   @override

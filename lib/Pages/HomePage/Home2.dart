@@ -60,9 +60,7 @@ class _Home2State extends State<Home2> {
 @override
   void initState() {
     // TODO: implement initState
-  print("ssdasdsdasa");
      _result = 5 + Random().nextInt(45 - 5);
-
     print("随机数结果:$_result");
     super.initState();
   }
@@ -77,13 +75,11 @@ class _Home2State extends State<Home2> {
   @override
   void deactivate() {
     // TODO: implement deactivate
-    print("11");
+    print("home2_deactivate11");
     super.deactivate();
   }
 
-  @override
-  // TODO: implement mounted
-  bool get mounted => super.mounted;
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +96,6 @@ class _Home2State extends State<Home2> {
             SizedBox(width: 10,),
             Builder(builder: (context){
               return  GestureDetector(onTap: (){
-                print("object");
                 Scaffold.of(context).openDrawer();
               },child: FaIcon(FontAwesomeIcons.alignJustify));
             })
