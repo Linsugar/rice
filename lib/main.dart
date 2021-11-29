@@ -38,7 +38,6 @@ class _MainAppState extends State<MainApp> {
   @override
   void dispose() {
     // TODO: implement dispose
-    print("22231232");
     super.dispose();
   }
 

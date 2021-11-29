@@ -31,6 +31,13 @@ class _PetState extends State<Pet> {
      print("进入pet1111");
     super.initState();
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print("离开pet1111");
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

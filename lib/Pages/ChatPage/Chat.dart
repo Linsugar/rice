@@ -11,30 +11,41 @@ class Chat extends StatefulWidget {
   _ChatState createState() => _ChatState();
 }
 
-class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin{
+class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin,WidgetsBindingObserver{
   String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
-
   FocusNode _focus = FocusNode();
-
+  TextEditingController _textEditingController = TextEditingController();
+  bool isActivited = false;
 
   @override
   void initState() {
     // TODO: implement initState
-    var s = Scaffold.of(context).isDrawerOpen;
     print("进入chat");
-    print("s===$s");
     _focus.unfocus();
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
   }
 
-
   @override
-  void dispose() {
-    // TODO: implement dispose
-
-    _focus.unfocus();
-    super.dispose();
+  void didChangeMetrics() {
+    // TODO: implement didChangeMetrics
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+     if(isActivited){
+       isActivited = false;
+       _focus.unfocus();
+     }else{
+       isActivited = true;
+     }
+    });
+    print("高度是否变化");
+    super.didChangeMetrics();
   }
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +81,7 @@ class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin{
                   ),
                   child: TextField(
                     focusNode: _focus,
+                    controller: _textEditingController,
                     maxLines: 1,
                     decoration: InputDecoration(
                         hintText: "快速查找",
