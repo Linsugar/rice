@@ -20,6 +20,8 @@ class _ChatState extends State<Chat> {
   @override
   void initState() {
     // TODO: implement initState
+    var s = Scaffold.of(context).isDrawerOpen;
+    print("s===$s");
     _focus.unfocus();
     super.initState();
   }

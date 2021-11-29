@@ -19,6 +19,7 @@ class _Home2State extends State<Home2> {
   Color _color = Color.fromRGBO(252, 252, 252, 1);
   Color _cityColor= Color.fromRGBO(213, 71, 70, 1);
   String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
+
   int _result = 5;
 
 
@@ -59,17 +60,34 @@ class _Home2State extends State<Home2> {
 @override
   void initState() {
     // TODO: implement initState
+  print("ssdasdsdasa");
      _result = 5 + Random().nextInt(45 - 5);
+
     print("随机数结果:$_result");
     super.initState();
   }
 
   @override
+  void dispose() {
+  print("进入夫");
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    print("11");
+    super.deactivate();
+  }
+
+  @override
+  // TODO: implement mounted
+  bool get mounted => super.mounted;
+
+  @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
-
-
-
     return Scaffold(
       backgroundColor: Colors.white10,
       resizeToAvoidBottomInset: false,
@@ -304,6 +322,8 @@ class _Home2State extends State<Home2> {
 }
 
 
+
+//弹窗积分
 ShowWidget(context,randResult){
   showDialog(context: context, builder: (context){
     return Dialog(
@@ -339,21 +359,43 @@ DrawWidget(context){
   return Container(
     color: Colors.white,
     width: MediaQuery.of(context).size.width/2,
-    child: Column(
+    child:ListView(
       children: [
         Row(children: [Expanded(
-          child: DrawerHeader(child: Column(children: [
-            Text("星期五"),
-            Text("天气：晴"),
-            Text("data"),
-          ],),decoration: BoxDecoration(
+          child: DrawerHeader(child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(top: -15,left:-10,child: Text("星期五",)),
+              Positioned(top: -15,right:-10,child:FaIcon(FontAwesomeIcons.cloudSunRain,)),
+
+            ],
+          ),decoration: BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(url),
                   fit: BoxFit.cover
               )
           ),),
-        ),],)
-
+        ),],),
+        ListTile(
+          leading: FaIcon(FontAwesomeIcons.cloudSunRain),
+          title: Text("是否可搜索"),
+          onTap: (){},
+        ),
+        ListTile(
+          leading: FaIcon(FontAwesomeIcons.cloudSunRain),
+          title: Text("关闭定位"),
+          onTap: (){},
+        ),
+        ListTile(
+          leading: FaIcon(FontAwesomeIcons.cloudSunRain),
+          title: Text("相册集"),
+          onTap: (){},
+        ),
+        ListTile(
+          leading: FaIcon(FontAwesomeIcons.cloudSunRain),
+          title: Text("守护模式"),
+          onTap: (){},
+        ),
       ],
     ),
   );

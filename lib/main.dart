@@ -13,11 +13,8 @@ import 'Routes/route.dart';
 
 void main(){
 
-  if (Platform.isAndroid) {
-    SystemUiOverlayStyle systemUiOverlayStyle =
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
+  SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 
   runApp(ProviderScope(child:MainApp(),));
 }
@@ -54,11 +51,7 @@ class _MainAppState extends State<MainApp> {
       title: "宠爱",
       onGenerateRoute: RoutePage.onGenerateRoute,
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        // backgroundColor: Color(0XFF64D0FF),
-        resizeToAvoidBottomInset: false,
-        body:Home(),
-      ),
+      home: Home(),
     );
   }
 }
