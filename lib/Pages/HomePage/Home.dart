@@ -7,7 +7,6 @@ import 'package:rice/Pages/ChatPage/Chat.dart';
 import 'package:rice/Pages/PetPage/pet.dart';
 import 'package:rice/Untils/Eventbus.dart';
 import '../MinePage/Mine.dart';
-import '../HirePage/Hire.dart';
 import '../MarkPage/Mark.dart';
 import '../../ProviderData/GlobData.dart' as Glob;
 import 'Home2.dart';

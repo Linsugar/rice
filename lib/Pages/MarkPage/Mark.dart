@@ -1,4 +1,4 @@
-//市场页
+//论坛页
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -39,6 +39,7 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
             controller: _tabController,tabs: _Tablist),),
       body: TabBarView(
         controller: _tabController,
+        physics: NeverScrollableScrollPhysics(),
         children: [
           ListView(
             padding: EdgeInsets.all(10),

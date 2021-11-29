@@ -23,6 +23,7 @@ class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin,WidgetsB
     print("进入chat");
     _focus.unfocus();
     WidgetsBinding.instance!.addObserver(this);
+
     super.initState();
   }
 
