@@ -132,7 +132,7 @@ class _PetDetailsState extends State<PetDetails> {
                                 boxShadow: [BoxShadow(color: Colors.black26,blurRadius: 2.0,offset: Offset(0.0,3.0))]
                             ),
                             width: MediaQuery.of(context).size.width,
-                            child: MaterialButton(onPressed: (){},child: Text("ADopt Jenny",style: TextStyle(color: Colors.white),),),)),
+                            child: MaterialButton(onPressed: (){},child: Text("交易",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 20,letterSpacing: 2.0),),),)),
                         ],
                       )),
                     ],

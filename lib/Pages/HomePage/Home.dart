@@ -24,7 +24,7 @@ class Home extends ConsumerStatefulWidget  {
 class _HomeState extends ConsumerState<Home> {
   Color color1 = Color.fromRGBO(34, 45, 64, 1);
   List<Widget> TabList= [Home2(),Chat(),Pet(),Mark(),Mine()];
-  UntilEventBus ?_untilEventBus;
+
   PageController _pageController = PageController();
 
 
@@ -57,16 +57,6 @@ class _HomeState extends ConsumerState<Home> {
     _pageController.addListener(() {
       ref.read(_PageIndex.state).state = _pageController.page!.toInt();
     });
-    _untilEventBus = UntilEventBus.instance;
-    _untilEventBus!.demoEventBus!.on().listen((event) {
-      showDialog(
-          barrierDismissible:false,
-          context: context, builder: (context){
-        return test1();
-      });
-      print("事件监听：$event");
-
-    });
     // TODO: implement initState
     super.initState();
 
@@ -75,7 +65,6 @@ class _HomeState extends ConsumerState<Home> {
   void dispose() {
     // TODO: implement dispose
     print("切换");
-    _untilEventBus!.demoEventBus!.destroy();
     super.dispose();
   }
 
@@ -95,7 +84,7 @@ class _HomeState extends ConsumerState<Home> {
         type: BottomNavigationBarType.fixed,
         currentIndex:ref.watch(_PageIndex.state).state,
         onTap: (value){
-          print("选择了$value");
+
           _pageController.jumpToPage(value);
           ref.read(_PageIndex.state).state = value;
         },
@@ -107,16 +96,7 @@ class _HomeState extends ConsumerState<Home> {
 
 
 
-Widget test1() {
-  return Center(
-    child: Container(
-      width: 100,
-      height: 100,
-      color: Colors.blueAccent,
-      child: Text("测试"),
-    )
-  );
-}
+
 
 
 class ImageSliderDemo extends StatelessWidget {

@@ -1,7 +1,11 @@
 //登录页
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rice/Pages/HomePage/Home.dart';
+import 'package:rice/ProviderData/GlobData.dart' as Glob;
+import 'package:rice/Untils/CommonUntil.dart';
 final StateProvider index = StateProvider((ref) => 0);
 
 class login extends StatefulWidget {
@@ -22,26 +26,23 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: DefaultTextStyle(
-        style: TextStyle(color: Colors.white),
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(34, 45, 64, 1)
-            ),
-            width: size.width,
-            height:size.height,
-            child: Column(
-              children: [
-                Expanded(
-                  child: loginForm()),
-                SizedBox(height: 70,)
-              ],
-            ),),
-        ),
-      )
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0.0,
+        title: Text("用户登录",style: TextStyle(color: Colors.black),),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(5),
+        height:size.height,
+        child: Column(
+          children: [
+            Expanded(flex: 6,child: loginForm()),
+            Expanded(flex: 2,child: otherLogin()),
+            Expanded(flex:2,child:  ProtocolDetail(context)),
+          ],
+        ),)
     );
   }
 }
@@ -52,20 +53,18 @@ Widget loginForm(){
   Color inputColor = Color.fromRGBO(52, 67, 96, 1);
   Color textColor  = Color.fromRGBO(61, 166, 215, 1);
   return Consumer(builder: (context,ref,_){
-    final UseIndex = ref.watch(index);
+    final UseIndex = ref.watch(index.state);
     return Form(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(height: 30,),
-          Row(children: [Text("欢迎使用宠爱",style: TextStyle(letterSpacing:1.5,fontSize:25,fontWeight: FontWeight.bold),),],),
           Row(children: [GestureDetector(onTap: (){
-            UseIndex.state=0;
-          },child: Text("密码登录",style: TextStyle(fontSize:18,fontWeight: FontWeight.w600,color: UseIndex.state==0?textColor:Colors.white))),
-            SizedBox(width: 20,),
+            UseIndex.state=1;
+          },child: Text("密码登录",style: TextStyle(fontSize:18,fontWeight: FontWeight.w600,color: UseIndex.state==1?textColor:Colors.black))),
+            SizedBox(width: 40,),
             GestureDetector(onTap: (){
-              UseIndex.state=1;
-            },child: Text("验证码登录",style: TextStyle(fontSize:18,fontWeight: FontWeight.w600,color: UseIndex.state==1?textColor:Colors.white)))],),
+              UseIndex.state=0;
+            },child: Text("验证码登录",style: TextStyle(fontSize:18,fontWeight: FontWeight.w600,color: UseIndex.state==0?textColor:Colors.black)))],),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -121,4 +120,96 @@ Widget loginForm(){
       ),
     );
   });
+}
+
+
+
+
+
+//获取手机号码界面
+class loginPhone extends StatefulWidget {
+  const loginPhone({Key? key}) : super(key: key);
+  @override
+  _loginPhoneState createState() => _loginPhoneState();
+}
+
+class _loginPhoneState extends State<loginPhone> {
+  String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
+  bool state = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title: Text("用户登录",style: TextStyle(color: Colors.black),),
+      ),
+      body: Column(
+        children: [
+          Spacer(flex: 1,),
+          Expanded(flex: 3,child: Container(
+          child: Column(
+            children: [
+              Expanded(flex: 7,child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/petIcon.png"),
+                    fit: BoxFit.contain
+                  )
+                ),
+              )),
+              Expanded(flex: 3,child: Container(child: Center(child: Text("176****2415"),),)),
+            ],
+          ),
+          )),
+          Expanded(flex: 2,child:Container(
+           
+            child:
+            Column(
+              children: [
+                Expanded(flex: 5,child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child,){
+                    return GestureDetector(
+                      onTap: (){
+                        print("进入");
+                        ref.read(Glob.GlobalData.loginStatue.state).state=true;
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        width: MediaQuery.of(context).size.width/1.2,child: Center(child: Text("本机号码一键登录")),),
+                    );
+                  },),
+               ),
+                Spacer(flex: 1,),
+                Expanded(flex: 5,child: GestureDetector(
+                  onTap: (){
+                   Navigator.pushNamed(context, "/login");
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                    color: Colors.orange[100],
+                    borderRadius: BorderRadius.circular(5)
+                    ),
+                    width: MediaQuery.of(context).size.width/1.2,child: Center(child: Text("其它手机号码登录")),),
+                )),
+              ],
+            ),
+          )),
+          Spacer(flex: 1,),
+          Expanded(flex: 3,child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text("其他方式登录",style: TextStyle(color: Colors.black38),),
+              otherLogin(),
+              ProtocolDetail(context)
+            ],
+          )),
+        ],
+      ),
+    );
+  }
 }

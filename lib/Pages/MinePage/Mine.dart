@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rice/Pages/LoginPage/Login.dart';
+import 'package:rice/ProviderData/GlobData.dart' as Glob;
 
 final StateProvider<int> PageState = StateProvider((ref)=>0);
 
-class Mine extends StatefulWidget {
+class Mine extends ConsumerStatefulWidget {
   @override
   _MineState createState() => _MineState();
 }
 
-class _MineState extends State<Mine> {
+class _MineState extends ConsumerState<Mine> {
   Color _color = Colors.white;
 
   String _img  = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202004%2F15%2F20200415161544_rpact.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1634390893&t=117af89dd866442ff2d0806a03667f21";
@@ -62,7 +64,7 @@ class _MineState extends State<Mine> {
   Widget build(BuildContext context) {
 
     Size _size = MediaQuery.of(context).size;
-    return Scaffold(
+    return ref.watch(Glob.GlobalData.loginStatue.state).state==true?Scaffold(
         body: Container(
           padding: EdgeInsets.only(top: 20,right: 10,left: 10,bottom: 10),
           width: _size.width,
@@ -74,10 +76,9 @@ class _MineState extends State<Mine> {
             // Mine1(_img,_list,_listItem,_size,_color)
           // child: Mine2(_list),
         )
-    );
+    ):loginPhone();
   }
 }
-
 
 
 Widget Mine1(String _img,List _list,List _listItem,var _size,Color _color){

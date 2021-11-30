@@ -65,20 +65,6 @@ class _Home2State extends State<Home2> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-  print("进入夫");
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
-  void deactivate() {
-    // TODO: implement deactivate
-    print("home2_deactivate11");
-    super.deactivate();
-  }
-
 
 
   @override

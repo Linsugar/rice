@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rice/Pages/LoginPage/Login.dart';
+import 'package:rice/ProviderData/GlobData.dart' as Glob;
+import 'package:rice/Untils/CommonUntil.dart';
+import 'package:rice/Untils/Eventbus.dart';
 
 
 
 
-class Chat extends StatefulWidget {
+class Chat extends ConsumerStatefulWidget {
   const Chat({Key? key}) : super(key: key);
 
   @override
   _ChatState createState() => _ChatState();
 }
 
-class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin,WidgetsBindingObserver{
+class _ChatState extends ConsumerState<Chat> with AutomaticKeepAliveClientMixin,WidgetsBindingObserver{
   String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
   FocusNode _focus = FocusNode();
   TextEditingController _textEditingController = TextEditingController();
   bool isActivited = false;
+  UntilEventBus ?_untilEventBus;
 
   @override
   void initState() {
@@ -24,8 +30,28 @@ class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin,WidgetsB
     _focus.unfocus();
     WidgetsBinding.instance!.addObserver(this);
 
+
+    _untilEventBus = UntilEventBus.instance;
+    _untilEventBus!.demoEventBus!.on().listen((event) {
+      showDialog(
+          barrierDismissible:false,
+          context: context, builder: (context){
+        return test1();
+      });
+      print("事件监听：$event");
+    });
     super.initState();
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _untilEventBus!.demoEventBus!.destroy();
+    print("销毁监听");
+    super.dispose();
+  }
+
+
 
   @override
   void didChangeMetrics() {
@@ -44,13 +70,9 @@ class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin,WidgetsB
 
 
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ref.watch(Glob.GlobalData.loginStatue.state).state==true?Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor:Colors.white,
@@ -211,10 +233,22 @@ class _ChatState extends State<Chat> with AutomaticKeepAliveClientMixin,WidgetsB
           }, itemCount: 10),)),
         ],
       ),),
-    );
+    ):loginPhone();
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+
+Widget test1() {
+  return Center(
+      child: Container(
+        width: 100,
+        height: 100,
+        color: Colors.blueAccent,
+        child: Text("测试"),
+      )
+  );
 }

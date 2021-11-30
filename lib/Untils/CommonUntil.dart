@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qiniu_flutter_sdk/qiniu_flutter_sdk.dart';
+import 'package:rice/ProviderData/GlobData.dart' as Glob;
 
 Widget homeInput(TextEditingController textController,FocusNode focusNode){
   return Container(
@@ -71,5 +74,57 @@ saveTime(){
 }
 
 
+Widget LoginAlert(context){
+  return Dialog(
+    child: Container(
+      color: Colors.green,
+      child: Text("11122"),
+    ),
+  );
+}
 
 
+
+//协议通用组件
+Widget ProtocolDetail(context){
+  return Consumer(builder: (context,  ref, _,){
+    return Row(
+      children: [
+        Expanded(flex: 1,child: Checkbox(onChanged: (value){
+          ref.read(Glob.GlobalData.ProtocolStatue.state).state = value;
+        },value: ref.watch(Glob.GlobalData.ProtocolStatue.state).state,)),
+        Expanded(flex: 9,child: RichText(text:TextSpan(
+            children: [
+              TextSpan(text: "登录表示已阅读并同意",style: TextStyle(color: Colors.black45),),
+              TextSpan(text: "《用户协议》",style: TextStyle(color: Colors.black),recognizer: TapGestureRecognizer()..onTap=(){
+                print("用户协议");
+              }),
+              TextSpan(text: "与",style: TextStyle(color: Colors.black45),),
+              TextSpan(text: "《隐私政策》",style: TextStyle(color: Colors.black),recognizer: TapGestureRecognizer()..onTap=(){
+                print("隐私政策");
+              }),
+            ]
+        ),))
+      ],
+    );
+  });
+}
+
+
+//微信支付宝登录
+Widget otherLogin(){
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      CircleAvatar(
+        backgroundColor: Colors.white,
+        backgroundImage: AssetImage("assets/images/weixin.webp"),
+      ),
+      SizedBox(width: 30,),
+      CircleAvatar(
+        backgroundColor: Colors.white,
+        backgroundImage: AssetImage("assets/images/zhifubao.webp"),
+      ),
+    ],
+  );
+}

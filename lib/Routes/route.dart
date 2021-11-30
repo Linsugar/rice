@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rice/Pages/LoginPage/Login.dart';
 import 'package:rice/Pages/PetPage/PetPageChildren/PetDetails.dart';
 import 'package:rice/PublicWidget/MapLocation.dart';
 import '../Pages/HomePage/Home.dart';
@@ -12,6 +13,7 @@ class RoutePage{
     "/homeChild":(context,{argument})=>HomeChild(argument),
     "/map":(context,{argument})=>ShowMapPage(),
     "/PetDetails":(context,{argument})=>PetDetails(),
+    "/login":(context,{argument})=>login(),
   };
 
 // ignore: missing_return, top_level_function_literal_block
