@@ -159,73 +159,80 @@ class _ChatState extends ConsumerState<Chat> with AutomaticKeepAliveClientMixin,
             },
             child: ListView.separated(
               itemBuilder: (context,index){
-                return Container(
-                  margin: EdgeInsets.only(left: 10,right: 10),
-                  constraints:BoxConstraints(
-                      minHeight: 50,
-                      maxHeight: MediaQuery.of(context).size.height/7
-                  ) ,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,4.0),blurRadius: 2.0)],
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(flex: 7,child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 10,),
-                            CircleAvatar(
-                              minRadius: 15,
-                              maxRadius: 30,
-                              backgroundImage: NetworkImage(url),
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Positioned(right: 3,bottom: -3,child: CircleAvatar(
-                                    radius: 10,
-                                    child: Container(decoration: BoxDecoration(
-                                        color:index ==1?Colors.greenAccent:Colors.redAccent,
-                                        borderRadius: BorderRadius.circular(10)
-                                    ),),
-                                  ))
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Alia",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                                Text("你住在哪里的呢？",style: TextStyle(color: Colors.black38)),
-                              ],)
-                          ],),
-                      )),
-                      Expanded(flex: 3,child:  Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20))
-                        ), child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("12:30",style: TextStyle(color: Colors.black38)),
-                          SizedBox(height: 5,),
-                          Container(
-                            padding: EdgeInsets.only(left: 5,right: 5),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text("12",style: TextStyle(color: Colors.white),),
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, "/ChatLeft",arguments: {
+                      "title":"tang"
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10,right: 10),
+                    constraints:BoxConstraints(
+                        minHeight: 50,
+                        maxHeight: MediaQuery.of(context).size.height/7
+                    ) ,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,4.0),blurRadius: 2.0)],
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(flex: 7,child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                        ],
-                      ),)),
-                    ],
+                          child: Row(
+                            children: [
+                              SizedBox(width: 10,),
+                              CircleAvatar(
+                                minRadius: 15,
+                                maxRadius: 30,
+                                backgroundImage: NetworkImage(url),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(right: 3,bottom: -3,child: CircleAvatar(
+                                      radius: 10,
+                                      child: Container(decoration: BoxDecoration(
+                                          color:index ==1?Colors.greenAccent:Colors.redAccent,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Alia",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                  Text("你住在哪里的呢？",style: TextStyle(color: Colors.black38)),
+                                ],)
+                            ],),
+                        )),
+                        Expanded(flex: 3,child:  Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20))
+                          ), child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("12:30",style: TextStyle(color: Colors.black38)),
+                            SizedBox(height: 5,),
+                            Container(
+                              padding: EdgeInsets.only(left: 5,right: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text("12",style: TextStyle(color: Colors.white),),
+                            ),
+                          ],
+                        ),)),
+                      ],
+                    ),
                   ),
                 );
               }, separatorBuilder: (context,index){

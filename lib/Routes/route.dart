@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rice/Pages/ChatPage/ChildChat/ChatLeft.dart';
 import 'package:rice/Pages/LoginPage/Login.dart';
 import 'package:rice/Pages/PetPage/PetPageChildren/PetDetails.dart';
 import 'package:rice/PublicWidget/MapLocation.dart';
@@ -14,6 +15,7 @@ class RoutePage{
     "/map":(context,{argument})=>ShowMapPage(),
     "/PetDetails":(context,{argument})=>PetDetails(),
     "/login":(context,{argument})=>login(),
+    "/ChatLeft":(context,{argument})=>ChatLeft(argument),
   };
 
 // ignore: missing_return, top_level_function_literal_block
