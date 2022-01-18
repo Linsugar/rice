@@ -25,20 +25,4 @@ class UntilEventBus{
 
 }
 
-//
-// class EventBus{
-//   // 单例类的关联模块
-//   // eventBus对象
-//  static EventBus? _event;
-//
-//   EventBus(){
-//      _getInstance();
-//   }
-//   _getInstance(){
-//     if (_event ==null){
-//       _event = EventBus();
-//     }
-//     return _event;
-//   }
-//
-// }
+

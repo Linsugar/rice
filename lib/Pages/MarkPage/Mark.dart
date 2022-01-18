@@ -1,6 +1,5 @@
 //论坛页
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Mark extends StatefulWidget {
   const Mark({Key? key}) : super(key: key);
@@ -29,10 +28,9 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
-
       appBar: AppBar(title: Text("论坛",style: TextStyle(color: Colors.black),),backgroundColor: _color,
-        bottom:
-        TabBar(
+        bottom: TabBar(
+          padding: EdgeInsets.only(bottom:5),
           labelStyle: (TextStyle(height: 3,color: Colors.red)),
             unselectedLabelColor: Colors.black,
             labelColor: Colors.blue,
@@ -73,11 +71,10 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
 
 
 Widget TabWidget(Size _size){
-  Color _tabColor= Colors.orangeAccent;
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: _tabColor,
+        color: Colors.blue,
         boxShadow: [BoxShadow(color: Colors.black45,blurRadius: 3.0,offset: Offset(0.0,2.0))]
     ),
     height: _size.height/6,
@@ -94,16 +91,16 @@ Widget TabWidget(Size _size){
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("口碑生活",style: TextStyle(color: Colors.white70,fontSize: 18),),
+            Text("口碑生活",style: TextStyle(fontSize: 18),),
             SizedBox(height: 10,),
-            Text("本地生活服务平台",style: TextStyle(color: Color.fromRGBO(111, 137, 179, 1))),
+            Text("本地生活服务平台",style: TextStyle()),
           ],
         ),)),
         Expanded(flex:3,child: Container(child: RichText(
           text: TextSpan(
               children: [
-                TextSpan(text: "参与:",style: TextStyle(color: Color.fromRGBO(111, 137, 179, 1))),
-                TextSpan(text: " 3000人",style: TextStyle(color: Color.fromRGBO(146, 171, 214, 1))),
+                TextSpan(text: "参与:",style: TextStyle()),
+                TextSpan(text: " 3000人",style: TextStyle()),
               ]
           ),
         ),)),

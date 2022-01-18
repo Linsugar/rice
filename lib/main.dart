@@ -59,3 +59,31 @@ class _MainAppState extends State<MainApp> {
 
 
 
+
+
+class test1 extends StatefulWidget {
+  const test1({Key? key}) : super(key: key);
+
+  @override
+  _test1State createState() => _test1State();
+
+}
+
+class _test1State extends State<test1> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    //到时候他就会先使用这个来提示
+    showDialog(context: context, builder:(context){
+      return Text("222");
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
