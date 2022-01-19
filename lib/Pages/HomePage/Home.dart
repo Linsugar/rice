@@ -1,6 +1,7 @@
 //首页
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice/Pages/ChatPage/Chat.dart';
@@ -71,6 +72,15 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    ScreenUtil.init(
+
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(375, 832.5),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body:PageView(
