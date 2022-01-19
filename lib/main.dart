@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         title: '宠爱',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          textTheme: TextTheme(button: TextStyle(fontSize: 20.sp)),
+          textTheme: TextTheme(button: TextStyle(fontSize: 21.sp)),
         ),
         builder: (context, widget) {
           ScreenUtil.setContext(context);
