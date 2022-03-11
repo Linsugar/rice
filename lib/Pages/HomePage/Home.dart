@@ -72,7 +72,8 @@ class _HomeState extends ConsumerState<Home> {
     ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
+            maxHeight: MediaQuery.of(context).size.height
+        ),
         designSize: Size(360, 690),
         context: context,
         minTextAdapt: true,

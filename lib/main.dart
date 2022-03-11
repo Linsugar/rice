@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Pages/HomePage/Home.dart';
 import 'Pages/LoginPage/Login.dart';
 import 'Routes/route.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main(){
 
@@ -33,7 +32,7 @@ class MainApp extends StatelessWidget {
       title: "宠爱",
       onGenerateRoute: RoutePage.onGenerateRoute,
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home:  Home(),
     );
   }
 }

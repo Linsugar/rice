@@ -1,4 +1,6 @@
 //登录页
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rice/Pages/HomePage/Home.dart';
 import 'package:rice/ProviderData/GlobData.dart' as Glob;
 import 'package:rice/Untils/CommonUntil.dart';
+
+import '../../Network/requests.dart';
 final StateProvider index = StateProvider((ref) => 0);
 
 class login extends StatefulWidget {
@@ -16,6 +20,10 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
   // final UseIndex = ProviderContainer();
+
+  GlobalKey Fromkey = GlobalKey<FormState>();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -38,7 +46,7 @@ class _loginState extends State<login> {
         height:size.height,
         child: Column(
           children: [
-            Expanded(flex: 6,child: loginForm()),
+            Expanded(flex: 6,child: loginForm(Fromkey,phoneController,pwdController)),
             Expanded(flex: 2,child: otherLogin()),
             Expanded(flex:2,child:  ProtocolDetail(context)),
           ],
@@ -48,13 +56,14 @@ class _loginState extends State<login> {
 }
 
 //表单输入框
-Widget loginForm(){
+Widget loginForm(GlobalKey Fromkey,TextEditingController phoneController,TextEditingController pwdController){
   Color color1 = Color.fromRGBO(97, 117, 152, 1);
   Color inputColor = Color.fromRGBO(52, 67, 96, 1);
   Color textColor  = Color.fromRGBO(61, 166, 215, 1);
   return Consumer(builder: (context,ref,_){
     final UseIndex = ref.watch(index.state);
     return Form(
+      key: Fromkey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -76,6 +85,7 @@ Widget loginForm(){
                       color: inputColor,
                       borderRadius: BorderRadius.circular(5)
                   ),child: TextFormField(
+                controller: phoneController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     border:InputBorder.none,
@@ -96,6 +106,7 @@ Widget loginForm(){
                   ),
                   child: Flex(direction: Axis.horizontal,children: [
                     Expanded(flex: 7,child: TextFormField(
+                      controller: pwdController,
                       style: TextStyle(color: Colors.white),decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: UseIndex.state==0?"请输入验证码":"请输入密码",hintStyle: TextStyle(color:color1)),
@@ -108,10 +119,19 @@ Widget loginForm(){
           ),
           Container(margin: EdgeInsets.all(5),
               decoration: BoxDecoration(color: Colors.blue,borderRadius:BorderRadius.circular(5)),
-              width: double.infinity,height: 50,child: MaterialButton(onPressed: (){
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                  return Home();
-                }));
+              width: double.infinity,height: 50,child: MaterialButton(onPressed: ()async{
+
+              if((Fromkey.currentState as FormState).validate()){
+                var res = await Request.setNetwork('user', {"phone":phoneController.text,"password":pwdController.text});
+                print("当前的返回值：${res["result"]["Token"]}");
+                var token = res["result"]["Token"];
+                if (token !=null){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    return Home();
+                  }));
+                }
+
+              }
               },child: Text("立即登录",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.w600),),)),
           Row(mainAxisAlignment: MainAxisAlignment.center,children: [GestureDetector(onTap: (){
             Navigator.pushNamed(context, "/register");

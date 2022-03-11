@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:ui';
 
 
 class ChatLeft extends ConsumerStatefulWidget {
@@ -18,22 +19,32 @@ class _ChatLeftState extends ConsumerState<ChatLeft> {
    double statusBar= ScreenUtil().statusBarHeight;
    double bottomBar= ScreenUtil().bottomBarHeight;
    print("statusBar=$statusBar,bottomBar==$bottomBar");
+   double height = AppBar().preferredSize.height;
+  print("高度：${height}");
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text(widget.content['title']),),
-      body:Column(
-        children: [
-          Container(
-            height:700.h,
-            width: 375.w,
-            color: Colors.blue,
-          ),
-          Container(
-            height:63.h,
-            width: 375.w,
-            color: Colors.black12,
-          ),
-        ],
+      body:Container(
+        color: Colors.yellow,
+        child: Column(
+          children: [
+            Container(
+              width: 1.sw,
+              height: ScreenUtil().setHeight(200),
+              color: Colors.black,
+            ),
+            Container(
+              width: 1.sw,
+              height:ScreenUtil().setHeight(200),
+              color: Colors.blue,
+            ),
+            Container(
+              width: 1.sw,
+              height: ScreenUtil().setHeight(290),
+              color: Colors.black,
+            ),
+          ],
+        ),
       )
     );
   }
