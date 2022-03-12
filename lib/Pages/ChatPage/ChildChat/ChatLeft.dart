@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:ui';
 
 
 class ChatLeft extends ConsumerStatefulWidget {
@@ -14,26 +16,36 @@ class ChatLeft extends ConsumerStatefulWidget {
 class _ChatLeftState extends ConsumerState<ChatLeft> {
   @override
   Widget build(BuildContext context) {
+   double statusBar= ScreenUtil().statusBarHeight;
+   double bottomBar= ScreenUtil().bottomBarHeight;
+   print("statusBar=$statusBar,bottomBar==$bottomBar");
+   double height = AppBar().preferredSize.height;
+  print("高度：${height}");
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text(widget.content['title']),),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: ListView(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height*0.7 ,
-                color: Colors.blue,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.4 ,
-                color: Colors.black,
-              )
-            ],
-          ),
+      body:Container(
+        color: Colors.yellow,
+        child: Column(
+          children: [
+            Container(
+              width: 1.sw,
+              height: ScreenUtil().setHeight(200),
+              color: Colors.black,
+            ),
+            Container(
+              width: 1.sw,
+              height:ScreenUtil().setHeight(200),
+              color: Colors.blue,
+            ),
+            Container(
+              width: 1.sw,
+              height: ScreenUtil().setHeight(290),
+              color: Colors.black,
+            ),
+          ],
         ),
-      ),
+      )
     );
   }
 }

@@ -30,7 +30,7 @@ class _MarkState extends State<Mark> with SingleTickerProviderStateMixin{
     return Scaffold(
       appBar: AppBar(title: Text("论坛",style: TextStyle(color: Colors.black),),backgroundColor: _color,
         bottom: TabBar(
-          padding: EdgeInsets.only(bottom:5),
+          padding: EdgeInsets.only(bottom:10),
           labelStyle: (TextStyle(height: 3,color: Colors.red)),
             unselectedLabelColor: Colors.black,
             labelColor: Colors.blue,

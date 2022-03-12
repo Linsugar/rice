@@ -28,31 +28,31 @@ Widget homeInput(TextEditingController textController,FocusNode focusNode){
 
 
 
-
-class LoadingShow{
-  static setEasyStyle (){
-    EasyLoading.instance
-    ..indicatorType =EasyLoadingIndicatorType.wave
-    ..loadingStyle=EasyLoadingStyle.light;
-  }
-  static showLoading(){
-    setEasyStyle();
-    return EasyLoading.show();
-  }
-  static disLoading(){
-    return EasyLoading.dismiss();
-  }
-}
+//
+// class LoadingShow{
+//   static setEasyStyle (){
+//     EasyLoading.instance
+//     ..indicatorType =EasyLoadingIndicatorType.wave
+//     ..loadingStyle=EasyLoadingStyle.light;
+//   }
+//   static showLoading(){
+//     setEasyStyle();
+//     return EasyLoading.show();
+//   }
+//   static disLoading(){
+//     return EasyLoading.dismiss();
+//   }
+// }
 
 
 //七牛云上传图片返回地址
-qiNiuUpImage(String path,String token)async{
-  LoadingShow.showLoading();
-  Storage stroge = Storage();
-  var result =  await stroge.putFile(File(path),token);
-  LoadingShow.disLoading();
-  return "http://cdn.tlapp.club/${result.key}";
-}
+// qiNiuUpImage(String path,String token)async{
+//   LoadingShow.showLoading();
+//   Storage stroge = Storage();
+//   var result =  await stroge.putFile(File(path),token);
+//   LoadingShow.disLoading();
+//   return "http://cdn.tlapp.club/${result.key}";
+// }
 
 
 timeCheck(afterTime){

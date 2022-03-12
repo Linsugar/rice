@@ -1,6 +1,7 @@
 //首页
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice/Pages/ChatPage/Chat.dart';
@@ -67,10 +68,22 @@ class _HomeState extends ConsumerState<Home> {
     print("切换");
     super.dispose();
   }
+  _InitScreenUtil(){
+    ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height
+        ),
+        designSize: Size(360, 690),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+  _InitScreenUtil();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body:PageView(
@@ -84,7 +97,6 @@ class _HomeState extends ConsumerState<Home> {
         type: BottomNavigationBarType.fixed,
         currentIndex:ref.watch(_PageIndex.state).state,
         onTap: (value){
-
           _pageController.jumpToPage(value);
           ref.read(_PageIndex.state).state = value;
         },
@@ -93,10 +105,6 @@ class _HomeState extends ConsumerState<Home> {
     );
   }
 }
-
-
-
-
 
 
 class ImageSliderDemo extends StatelessWidget {
