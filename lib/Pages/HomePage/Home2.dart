@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,14 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice/Pages/LaunchPage/Launch.dart';
 import 'dart:math';
 
-class Home2 extends StatefulWidget {
+import 'package:rice/ProviderData/GlobData.dart';
+
+class Home2 extends ConsumerStatefulWidget {
   const Home2({Key? key}) : super(key: key);
 
   @override
   _Home2State createState() => _Home2State();
 }
 
-class _Home2State extends State<Home2> {
+class _Home2State extends ConsumerState<Home2> {
 
   Color _color = Color.fromRGBO(252, 252, 252, 1);
   Color _cityColor= Color.fromRGBO(213, 71, 70, 1);
@@ -62,6 +66,19 @@ class _Home2State extends State<Home2> {
     // TODO: implement initState
      _result = 5 + Random().nextInt(45 - 5);
     print("随机数结果:$_result");
+
+    // if (s!=null){
+    //   var sq=jsonEncode(s);
+    //
+    //   print("xxxx:${sq}");
+    // }
+
+    // if(ref.watch(GlobalData.LoginResult.state).state==null){
+    //   print("空");
+    // }else{
+    //   print("当前的数据：${ref.watch(GlobalData.LoginResult.state).state}");
+    // }
+
     super.initState();
   }
 
@@ -69,6 +86,7 @@ class _Home2State extends State<Home2> {
 
   @override
   Widget build(BuildContext context) {
+    var InfoValue = ref.read(GlobalData.LoginResult.state).state;
     var _size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white10,
@@ -92,15 +110,16 @@ class _Home2State extends State<Home2> {
             SizedBox(width: 30,),
             FaIcon(FontAwesomeIcons.mapMarkerAlt,color: _cityColor,size: 16,),
             SizedBox(width: 10,),
-            Text("成都"),
+            // Text("成都"),
+            Text(InfoValue==null?"成都":InfoValue.create_city),
             SizedBox(width: 5,),
-            Text("TomBob"),
+            Text(InfoValue==null?"成都":InfoValue.username),
           ],
         ),
         actions: [
           SizedBox(width: 10,),
           CircleAvatar(
-            backgroundImage: NetworkImage(url),
+            backgroundImage: NetworkImage(InfoValue==null?url:InfoValue.profilePicture),
           ),
           SizedBox(width: 10,)
         ],
