@@ -1,16 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rice/ProviderData/GlobData.dart';
+import '../../Network/requests.dart';
+import './PetModels/Pet.dart';
+import '../../ProviderData/GlobData.dart';
 final _selectIndex = StateProvider((ref) => 0);
 
-class Pet extends StatefulWidget {
+class Pet extends ConsumerStatefulWidget {
   const Pet({Key? key}) : super(key: key);
 
   @override
   _PetState createState() => _PetState();
 }
 
-class _PetState extends State<Pet> {
+class _PetState extends ConsumerState<Pet> {
   String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
    var animale = [
      FontAwesomeIcons.dog,
@@ -24,11 +30,13 @@ class _PetState extends State<Pet> {
 
    Color  _selectColor = Color.fromRGBO(197,233,234, 1);
    Color  _unselectColor = Color.fromRGBO(241, 217, 205, 1);
+   List <PetModel>PetList = [];
 
    @override
   void initState() {
     // TODO: implement initState
      print("进入pet1111");
+     _getPetData();
     super.initState();
   }
   @override
@@ -38,10 +46,26 @@ class _PetState extends State<Pet> {
     super.dispose();
   }
 
+  _getPetData()async{
+     if (PetList.isEmpty && ref.read(GlobalData.LoginResult.state).state!=null){
+       var PetData =await Request.getNetwork("/pet",token:ref.read(GlobalData.LoginResult.state).state.Token);
+       print("得到的数据：PetData：${PetData["res"]}");
+       print("得到的数据类型：PetData：${PetData["res"].runtimeType}");
+       List res = PetData["res"];
+       for (var i=0;i<res.length;i++){
+              PetList.add(PetModel(res[i]));
+       }
+       ref.read(GlobalData.PetResult.state).state = PetList;
+       print("循环完毕$PetList");
+     }
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+    var PetDetail  = ref.watch(GlobalData.PetResult.state).state;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -105,7 +129,7 @@ class _PetState extends State<Pet> {
                 for(int i=0;i<2;i++)
                   GestureDetector(
                     onTap: (){
-                      Navigator.pushNamed(context, "/PetDetails");
+                      Navigator.pushNamed(context, "/PetDetails",arguments:PetDetail==null?"pet":PetDetail[index]);
                     },
                     child: Container(
                       width: _size.width/2.2,
@@ -126,7 +150,7 @@ class _PetState extends State<Pet> {
                                 margin: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    image: DecorationImage(image: NetworkImage(url),fit: BoxFit.cover)),),
+                                    image: DecorationImage(image: NetworkImage(PetDetail == null?url:PetDetail[index].pet_avatotr),fit: BoxFit.cover)),),
                               Positioned(
                                   top: 10,
                                   right: 10,
@@ -147,11 +171,11 @@ class _PetState extends State<Pet> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Franklin",style: TextStyle(fontWeight: FontWeight.bold ),),
+                                Text(PetDetail == null?"Franklin":PetDetail[index].pet_name,style: TextStyle(fontWeight: FontWeight.bold ),),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("DutchPug",style: TextStyle(fontWeight: FontWeight.w400 ,color: Colors.blueGrey),overflow: TextOverflow.clip,maxLines: 1,),
+                                    Text(PetDetail == null?"DutchPug":PetDetail[index].petdetail,style: TextStyle(fontWeight: FontWeight.w400 ,color: Colors.blueGrey),overflow: TextOverflow.clip,maxLines: 1,),
                                     Container(
                                         padding: EdgeInsets.all(2),
                                         decoration: BoxDecoration(
@@ -171,7 +195,7 @@ class _PetState extends State<Pet> {
             );
           }, separatorBuilder: (context,index){
             return SizedBox(height: 10,);
-          }, itemCount: 10),
+          }, itemCount: PetDetail==null?1: PetDetail.length),
         )),
 
       ],

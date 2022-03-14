@@ -67,18 +67,6 @@ class _Home2State extends ConsumerState<Home2> {
      _result = 5 + Random().nextInt(45 - 5);
     print("随机数结果:$_result");
 
-    // if (s!=null){
-    //   var sq=jsonEncode(s);
-    //
-    //   print("xxxx:${sq}");
-    // }
-
-    // if(ref.watch(GlobalData.LoginResult.state).state==null){
-    //   print("空");
-    // }else{
-    //   print("当前的数据：${ref.watch(GlobalData.LoginResult.state).state}");
-    // }
-
     super.initState();
   }
 

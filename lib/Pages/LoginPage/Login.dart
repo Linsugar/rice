@@ -7,7 +7,7 @@ import 'package:rice/Network/requests.dart';
 import 'package:rice/Pages/HomePage/Home.dart';
 import 'package:rice/ProviderData/GlobData.dart' as Glob;
 import 'package:rice/Untils/CommonUntil.dart';
-import '../../Models/modeData.dart';
+import 'LoginModel/modeData.dart';
 final StateProvider index = StateProvider((ref) => 0);
 
 class login extends StatefulWidget {

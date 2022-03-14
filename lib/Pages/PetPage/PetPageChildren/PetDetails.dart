@@ -2,15 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PetDetails extends StatefulWidget {
+ var wg;
+ PetDetails(this.wg,{Key? key}) : super(key: key);
 
   @override
   _PetDetailsState createState() => _PetDetailsState();
 }
 
 class _PetDetailsState extends State<PetDetails> {
+
   String url = "https://t7.baidu.com/it/u=2405382010,1555992666&fm=193&f=GIF";
+  var Pet;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("传入的参数：${widget.wg}");
+    Pet = widget.wg;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("宠物详情",style: TextStyle(color: Colors.black),),
@@ -61,8 +74,8 @@ class _PetDetailsState extends State<PetDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                            RichText(text: TextSpan(text: "Jenny",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),children: [
-                              TextSpan(text: "(Golden Retriveer)",style: TextStyle(fontSize: 10,color: Colors.black38))
+                            RichText(text: TextSpan(text:Pet =="pet"?"Jenny":Pet.pet_name,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),children: [
+                              TextSpan(text: Pet =="pet"?"(Golden Retriveer)":"(${Pet.petdetail})",style: TextStyle(fontSize: 10,color: Colors.black38))
                             ])),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,7 +98,7 @@ class _PetDetailsState extends State<PetDetails> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
-                                image: NetworkImage(url),
+                                image: NetworkImage(Pet =="pet"?url:Pet.pet_avatotr),
                                 fit: BoxFit.cover
                               )
                             ),

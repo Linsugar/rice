@@ -13,7 +13,7 @@ class RoutePage{
     "/home":(context,{argument})=>Home(),
     "/homeChild":(context,{argument})=>HomeChild(argument),
     "/map":(context,{argument})=>ShowMapPage(),
-    "/PetDetails":(context,{argument})=>PetDetails(),
+    "/PetDetails":(context,{argument})=>PetDetails(argument),
     "/login":(context,{argument})=>login(),
     "/ChatLeft":(context,{argument})=>ChatLeft(argument),
   };
