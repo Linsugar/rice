@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rice/Pages/ChatPage/ChildChat/ChatLeft.dart';
 import 'package:rice/Pages/LoginPage/Login.dart';
+import 'package:rice/Pages/MarkPage/MarkChildren/MarkWebView.dart';
 import 'package:rice/Pages/PetPage/PetPageChildren/PetDetails.dart';
 import 'package:rice/PublicWidget/MapLocation.dart';
 import '../Pages/HomePage/Home.dart';
@@ -16,6 +17,7 @@ class RoutePage{
     "/PetDetails":(context,{argument})=>PetDetails(argument),
     "/login":(context,{argument})=>login(),
     "/ChatLeft":(context,{argument})=>ChatLeft(argument),
+    "/MarkWeb":(context,{argument})=>MarkWeb(argument),
   };
 
 // ignore: missing_return, top_level_function_literal_block

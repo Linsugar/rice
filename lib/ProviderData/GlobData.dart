@@ -7,4 +7,5 @@ class GlobalData{
   static final StateProvider ProtocolStatue = StateProvider((ref) => true);
   static final StateProvider LoginResult = StateProvider((ref) =>null);
   static final StateProvider PetResult = StateProvider((ref) =>null);
+  static final StateProvider MarkResult = StateProvider((ref) =>null);
 }

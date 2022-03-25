@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rice/Pages/PetPage/PetPageChildren/PetAlert.dart';
 import 'package:rice/ProviderData/GlobData.dart';
 import '../../Network/requests.dart';
 import './PetModels/Pet.dart';
@@ -49,9 +51,8 @@ class _PetState extends ConsumerState<Pet> {
   _getPetData()async{
      if (PetList.isEmpty && ref.read(GlobalData.LoginResult.state).state!=null){
        var PetData =await Request.getNetwork("/pet",token:ref.read(GlobalData.LoginResult.state).state.Token);
-       print("得到的数据：PetData：${PetData["res"]}");
-       print("得到的数据类型：PetData：${PetData["res"].runtimeType}");
-       List res = PetData["res"];
+       print("得到的数据：PetData：${PetData["Result"]}");
+       List res = PetData["Result"];
        for (var i=0;i<res.length;i++){
               PetList.add(PetModel(res[i]));
        }
@@ -75,9 +76,11 @@ class _PetState extends ConsumerState<Pet> {
         Row(
           children: [
             FaIcon(FontAwesomeIcons.search,color: Colors.black,),
-            SizedBox(width: 15,),
-            FaIcon(FontAwesomeIcons.alignRight,color: Colors.black38,),
-            SizedBox(width: 10,),
+            SizedBox(width: 15.sp,),
+            InkWell(onTap: (){
+              AddPetAlert(context);
+            },child: FaIcon(FontAwesomeIcons.addressBook,color: Colors.black38,)),
+            SizedBox(width: 10.sp,),
           ],
         )
       ],

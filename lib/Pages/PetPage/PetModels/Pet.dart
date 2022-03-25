@@ -17,7 +17,7 @@ class PetModel{
   int petMoney = 0;
   int ?petBuyMoney;
   String PetContent ="";
-  double ?PetAge;                                                          //最终售卖价
+  num ?PetAge;                                                          //最终售卖价
   String ?PetGender;                                                  //最终售卖价
   int ?PetWeight;                                                //最终售卖价
   String ?PetLocation;

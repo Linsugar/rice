@@ -122,13 +122,14 @@ Widget loginForm(GlobalKey FromKey,TextEditingController U,TextEditingController
 
                 if ((FromKey.currentState as FormState).validate()){
                 var res = await Request.setNetwork("/user", {"phone":U.text,"password":P.text});
-                print("到的数据：${res["result"]}");
-                if(res["result"]["Token"]!=null){
+                print("到的数据：${res["Result"]}");
+                if(res["Result"]["Token"]!=null){
                   // LoginModel(res["result"]);
-                  ref.read(Glob.GlobalData.LoginResult.state).state =LoginModel(res["result"]);
+                  ref.read(Glob.GlobalData.LoginResult.state).state =LoginModel(res["Result"]);
                   ref.read(Glob.GlobalData.loginStatue.state).state = true;
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                    return Home();}));
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+                    return Home();
+                  }) , (route) => false);
                 }else{
                   print("错误到的数据：$res");
                 }
