@@ -8,6 +8,25 @@ import 'package:rice/Pages/LaunchPage/Launch.dart';
 import 'package:rice/ProviderData/GlobData.dart';
 import 'MarkModel/MarkModel.dart';
 
+
+final FutureProvider<List> futureMarKProvider = FutureProvider((ref) async {
+  List <MarkModel>MarkList = [];
+  /// 延时3s
+      var InfoValue = ref.read(GlobalData.LoginResult.state).state;
+      if(InfoValue==null){
+      }else{
+        if (MarkList.isEmpty){
+          var res = await Request.getNetwork("UserCenter/weixin",token:InfoValue.Token);
+          var item = res["Result"]["item"];
+          print("得到的数据：$item");
+          for (var i=0;i<res["Result"]["item_count"];i++){
+            MarkList.add(MarkModel(item[i]));
+          }
+        }
+      }
+  return MarkList;
+});
+
 class Mark extends ConsumerStatefulWidget {
   const Mark({Key? key}) : super(key: key);
 
@@ -17,7 +36,6 @@ class Mark extends ConsumerStatefulWidget {
 
 class _MarkState extends ConsumerState<Mark> with SingleTickerProviderStateMixin{
   Color _color = Colors.white;
-  List <MarkModel>MarkList = [];
   TabController ?_tabController;
   List<Widget> _Tablist = [
     Text("宠物论坛"),
@@ -30,27 +48,9 @@ class _MarkState extends ConsumerState<Mark> with SingleTickerProviderStateMixin
     // TODO: implement initState
     print("异步获取微信文章");
     _tabController = TabController(length: 4, vsync: this);
-    _GetArticle();
-
     super.initState();
   }
 
-  _GetArticle()async{
-    var InfoValue = ref.read(GlobalData.LoginResult.state).state;
-    if(InfoValue==null){
-    }else{
-      if (MarkList.isEmpty){
-        var res = await Request.getNetwork("/weixin",token:InfoValue.Token);
-        var item = res["Result"]["item"];
-        print("得到的数据：$item");
-        for (var i=0;i<res["Result"]["item_count"];i++){
-          MarkList.add(MarkModel(item[i]));
-        }
-        ref.read(GlobalData.MarkResult.state).state = MarkList;
-      }
-    }
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _MarkState extends ConsumerState<Mark> with SingleTickerProviderStateMixin
         backgroundColor: _color,
         bottom: TabBar(
           padding: EdgeInsets.only(bottom:7),
-          labelStyle: (TextStyle(height: 3,color: Colors.red,fontSize: 15.sp)),
+          labelStyle: (TextStyle(height: 3,color: Colors.red,fontSize: 14.sp)),
             unselectedLabelColor: Colors.black,
             labelColor: Colors.blue,
             controller: _tabController,tabs: _Tablist),),
@@ -104,9 +104,9 @@ Widget TabWidget(Size _size){
   String image = "https://th.bing.com/th/id/OIP.FWsOdi7XQjvqMTdioSxgvgHaHa?pid=ImgDet&rs=1";
   return Consumer(
     builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      var mark = ref.read(GlobalData.MarkResult.state).state;
-      return Container(
-        height: 470.h,
+      AsyncValue<List> value = ref.watch(futureMarKProvider);
+      return value.when(data: (valueList)=>Container(
+        height: 490.h,
         child: ListView.separated(itemBuilder: (BuildContext context, int index){
           return Container(
             decoration: BoxDecoration(
@@ -120,7 +120,7 @@ Widget TabWidget(Size _size){
               children: [
                 Expanded(flex: 3,child: Container(decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(mark==null?image:mark[index].thumb_url),
+                        image: NetworkImage(valueList.isEmpty?image:valueList[index].thumb_url),
                         fit: BoxFit.cover
                     )
                 ),)),
@@ -129,9 +129,9 @@ Widget TabWidget(Size _size){
                   mainAxisAlignment: MainAxisAlignment.center,
 
                   children: [
-                    Text(mark==null?"口碑生活":mark[index].title,style: TextStyle(fontSize: 18),maxLines: 2,),
+                    Text(valueList.isEmpty?"口碑生活":valueList[index].title,style: TextStyle(fontSize: 18),maxLines: 2,),
                     SizedBox(height: 10,),
-                    Text(mark==null?"本地生活服务平台":mark[index].digest,maxLines: 2,style: TextStyle(overflow: TextOverflow.ellipsis),),
+                    Text(valueList.isEmpty?"本地生活服务平台":valueList[index].digest,maxLines: 2,style: TextStyle(overflow: TextOverflow.ellipsis),),
                   ],
                 ),)),
                 SizedBox(width: 15.w,),
@@ -140,7 +140,7 @@ Widget TabWidget(Size _size){
                       children: [
                         TextSpan(text: "查阅",recognizer: TapGestureRecognizer()..onTap=(){
                           print("点击查询");
-                          Navigator.pushNamed(context, "/MarkWeb",arguments: mark[index].url);
+                          Navigator.pushNamed(context, "/MarkWeb",arguments: valueList[index].url);
                         }),
                       ]
                   ),
@@ -150,8 +150,8 @@ Widget TabWidget(Size _size){
           );
         }, separatorBuilder: (BuildContext context, int index){
           return Divider();
-        }, itemCount: mark==null?1:mark.length),
-      );
+        }, itemCount:valueList.isEmpty?1:valueList.length),
+      ), error: (err,stc)=>Center(child: Text("加载...")), loading: ()=>Center(child: CircularProgressIndicator(),));
     },
   );
 }

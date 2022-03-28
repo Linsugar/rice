@@ -1,5 +1,8 @@
 
+import 'dart:io';
+
 import 'package:image_picker/image_picker.dart';
+import 'package:rice/Untils/QiNiuUntils.dart';
 
 class Creamer{
   static ImagePicker _imagePicker = ImagePicker();
@@ -14,12 +17,17 @@ class Creamer{
     }
 
   }
-  static  Future GetGrally()async{
+  static  Future GetGrally(String token)async{
     //使用相册
     try{
+      print("当前返回的token:$token");
       var result =  await _imagePicker.pickImage(source:ImageSource.gallery);
+      // return result?.path;
+      print("当前返回的result:${result!.path}");
+      var url= await QiuNiu().PusImage(result.path, token);
+      print("当前返回的url:${url.key}");
+      return "http://cdn.tlapp.club/${url.key}";
 
-      return result?.path;
     }catch(e){
       print("e:$e");
     }

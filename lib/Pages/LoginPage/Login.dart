@@ -121,7 +121,7 @@ Widget loginForm(GlobalKey FromKey,TextEditingController U,TextEditingController
               width: double.infinity,height: 50,child: MaterialButton(onPressed: ()async{
 
                 if ((FromKey.currentState as FormState).validate()){
-                var res = await Request.setNetwork("/user", {"phone":U.text,"password":P.text});
+                var res = await Request.setNetwork("UserCenter/user", {"phone":U.text,"password":P.text});
                 print("到的数据：${res["Result"]}");
                 if(res["Result"]["Token"]!=null){
                   // LoginModel(res["result"]);
