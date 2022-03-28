@@ -14,17 +14,22 @@ final _selectIndex = StateProvider((ref) => 0);
 
 final FutureProvider<List> futurePetProvider = FutureProvider((ref) async {
   List <PetModel>PetList = [];
+  List FilterList = [];
   /// 延时3s
-  if (PetList.isEmpty && ref.read(GlobalData.LoginResult.state).state!=null){
-    var PetData =await Request.getNetwork("UserCenter/pet",token:ref.read(GlobalData.LoginResult.state).state.Token);
-    print("得到的数据：PetData：${PetData["Result"]}");
-    List res = PetData["Result"];
-    for (var i=0;i<res.length;i++){
-      PetList.add(PetModel(res[i]));
-    }
-    print("循环完毕$PetList");
+  var PetData =await Request.getNetwork("UserCenter/pet",token:ref.read(GlobalData.LoginResult.state).state.Token);
+  print("得到的数据：PetData：${PetData["Result"]}");
+  List res = PetData["Result"];
+  for (var i=0;i<res.length;i++){
+    PetList.add(PetModel(res[i]));
   }
-  return PetList;
+  var va1=ref.watch(_selectIndex.state).state;
+  if (va1 == 0){
+    return PetList;
+  }else{
+    FilterList = PetList.where((element) => int.parse(element.petClass)==va1).toList();
+    return FilterList;
+  }
+
 });
 
 class Pet extends ConsumerStatefulWidget {
@@ -48,13 +53,11 @@ class _PetState extends ConsumerState<Pet> {
 
    Color  _selectColor = Color.fromRGBO(197,233,234, 1);
    Color  _unselectColor = Color.fromRGBO(241, 217, 205, 1);
-   List <PetModel>PetList = [];
 
    @override
   void initState() {
     // TODO: implement initState
      print("进入pet1111");
-     // _getPetData();
     super.initState();
   }
   @override
@@ -117,92 +120,88 @@ class _PetState extends ConsumerState<Pet> {
           return SizedBox(width: 10,);
         }, itemCount: animale.length)),
 
-        SizedBox(height: 5,),
+      SizedBox(height: 5,),
       Expanded(flex: 12,child: Consumer(
         builder: (  BuildContext context, WidgetRef ref, Widget? _,){
           AsyncValue<List> PetList = ref.watch(futurePetProvider);
+          print("PetList:$PetList");
           return PetList.when(data: (value)=>RefreshIndicator(
             onRefresh: ()async{
-              await Future.delayed(Duration(milliseconds: 1500));
-//结束刷新
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("更新成功")));
-              return Future.value(true);
+              ref.refresh(futurePetProvider);        //结束刷新
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("更新成功:${value.length}")));
             },
-            child: ListView.separated(
-                itemBuilder: (context,index){
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      for(int i=0;i<2;i++)
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.pushNamed(context, "/PetDetails",arguments:value.isEmpty?"pet":value[index]);
-                          },
-                          child: Container(
-                            width: _size.width/2.2,
-                            constraints:BoxConstraints(
-                                minHeight: 100,
-                                maxHeight: 200
-                            ),
-                            decoration: BoxDecoration(
-                                boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,2.0),blurRadius: 3.0)],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5)
-                            ),
+            child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.w,
+              mainAxisSpacing: 10.h
+            ), itemBuilder: (BuildContext context, int index){
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, "/PetDetails",arguments:value.isEmpty?"pet":value[index]);
+                    },
+                    child: Container(
+                      width: 160.w,
+                      height: 200.h,
+                      decoration: BoxDecoration(
+                          boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,2.0),blurRadius: 3.0)],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(flex: 9,child: Stack(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    image: DecorationImage(image: NetworkImage(value.isEmpty?url:value[index].pet_avatotr),fit: BoxFit.cover)),),
+                              Positioned(
+                                  top: 10,
+                                  right: 10,
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      print("点播关注");
+                                    },
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.deepPurple,
+                                      radius: 12,
+                                      child: FaIcon(FontAwesomeIcons.heartbeat,size: 12,color: Colors.white,),),
+                                  ))
+                            ],
+                          )),
+                          Expanded(flex: 3,child: Container(
+                            padding: EdgeInsets.only(left: 5,right: 5),
+                            width: double.maxFinite,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(flex: 9,child: Stack(
+                                Text(value.isEmpty?"Franklin":value[index].pet_name,style: TextStyle(fontWeight: FontWeight.bold ),),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
+                                    Text(value.isEmpty?"DutchPug":value[index].petdetail,style: TextStyle(fontWeight: FontWeight.w400 ,color: Colors.blueGrey),overflow: TextOverflow.clip,maxLines: 1,),
                                     Container(
-                                      margin: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
-                                          image: DecorationImage(image: NetworkImage(value.isEmpty?url:value[index].pet_avatotr),fit: BoxFit.cover)),),
-                                    Positioned(
-                                        top: 10,
-                                        right: 10,
-                                        child: GestureDetector(
-                                          onTap: (){
-                                            print("点播关注");
-                                          },
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.deepPurple,
-                                            radius: 12,
-                                            child: FaIcon(FontAwesomeIcons.heartbeat,size: 12,color: Colors.white,),),
-                                        ))
-                                  ],
-                                )),
-                                Expanded(flex: 3,child: Container(
-                                  padding: EdgeInsets.only(left: 5,right: 5),
-                                  width: double.maxFinite,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(value.isEmpty?"Franklin":value[index].pet_name,style: TextStyle(fontWeight: FontWeight.bold ),),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(value.isEmpty?"DutchPug":value[index].petdetail,style: TextStyle(fontWeight: FontWeight.w400 ,color: Colors.blueGrey),overflow: TextOverflow.clip,maxLines: 1,),
-                                          Container(
-                                              padding: EdgeInsets.all(2),
-                                              decoration: BoxDecoration(
-                                                  color: Color.fromRGBO(251,237, 237, 1),
-                                                  borderRadius: BorderRadius.circular(5)
-                                              ),child: Text("2YRS",style: TextStyle(fontWeight: FontWeight.bold ,color: Colors.red,fontSize: 10.0),)),
-                                        ],)
+                                        padding: EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                            color: Color.fromRGBO(251,237, 237, 1),
+                                            borderRadius: BorderRadius.circular(5)
+                                        ),child: Text("2YRS",style: TextStyle(fontWeight: FontWeight.bold ,color: Colors.red,fontSize: 10.0),)),
+                                  ],)
 
-                                    ],),
-                                ))
+                              ],),
+                          ))
 
-                              ],
-                            ),
-                          ),
-                        )
-                    ],
-                  );
-                }, separatorBuilder: (context,index){
-              return SizedBox(height: 10,);
-            }, itemCount: value.isEmpty?1: value.length),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              );
+            },itemCount: value.length,),
           ), error: (error, stackTrace)=>Center(child: Text("有误"),), loading: ()=>Center(child: CircularProgressIndicator()));
         },
       )),
@@ -213,3 +212,5 @@ class _PetState extends ConsumerState<Pet> {
 }
 
 
+
+//

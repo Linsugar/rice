@@ -6,7 +6,7 @@ class Request{
     connectTimeout: 5000,
 //    baseUrl:'http://tlapp.club:8002/Jia/'
 //   baseUrl: "http://192.168.3.199:8000/v1"
-  baseUrl: "http://192.168.1.11:8000/"
+  baseUrl: "http://192.168.3.199:8000/"
 //    baseUrl: 'http://3ie5702133.wicp.vip/Jia/'
 ////    测试
 //    baseUrl: 'http://192.168.1.5:8000/Jia/',
@@ -43,7 +43,7 @@ class Request{
       print("get：$e");
     }
   }
-  static setNetwork(String url,data,{String ?token})async{
+  static setNetwork(String url,{String ?token,data})async{
     var options = Options(
         headers: {
           // "Authorization":token==null?'':'ak7 '+token+" auth"

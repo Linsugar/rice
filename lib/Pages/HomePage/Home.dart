@@ -114,7 +114,7 @@ class ImageSliderDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(10.r),
       child: CarouselSlider(
         options: CarouselOptions(
             height: size.height,

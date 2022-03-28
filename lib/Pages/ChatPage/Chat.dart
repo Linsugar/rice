@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rice/Pages/LoginPage/Login.dart';
 import 'package:rice/ProviderData/GlobData.dart' as Glob;
@@ -88,7 +89,8 @@ class _ChatState extends ConsumerState<Chat> with AutomaticKeepAliveClientMixin,
         child: Flex(
         direction: Axis.vertical,
         children: [
-          Expanded(flex: 1,child: Container(
+          Container(
+            height: 50.h,
             decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,2),blurRadius: 2.0)],
@@ -97,10 +99,10 @@ class _ChatState extends ConsumerState<Chat> with AutomaticKeepAliveClientMixin,
             child:Row(
               children: [
                 Expanded(child:  Container(
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(3),
+                  padding: EdgeInsets.all(3.h),
+                  margin: EdgeInsets.all(3.w),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20)
+                      borderRadius: BorderRadius.circular(20.r)
                   ),
                   child: TextField(
                     focusNode: _focus,
@@ -118,126 +120,133 @@ class _ChatState extends ConsumerState<Chat> with AutomaticKeepAliveClientMixin,
                 )),
 
               ],
-            ),)),
+            ),),
           SizedBox(height: 5,),
-          Expanded(flex: 2,child:ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context,index){
-                if(index==0){
+          Container(
+            height: 100.h,
+            child:ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context,index){
+                  if(index==0){
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          maxRadius: 30,
+                          minRadius: 10,
+                          backgroundColor: Colors.white,
+                          child: FaIcon(FontAwesomeIcons.plus),
+                        ),
+                        Text("添加")
+                      ],
+                    );
+                  }
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         maxRadius: 30,
                         minRadius: 10,
-                        backgroundColor: Colors.white,
-                        child: FaIcon(FontAwesomeIcons.plus),
+                        backgroundImage: NetworkImage(url),
                       ),
-                      Text("添加")
+                      Text("啸天")
                     ],
                   );
-                }
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      maxRadius: 30,
-                      minRadius: 10,
-                      backgroundImage: NetworkImage(url),
-                    ),
-                    Text("啸天")
-                  ],
-                );
-              }, separatorBuilder: (context,index){
-            return SizedBox(width: 10,);
-          }, itemCount: 10)),
-          Expanded(flex: 7,child: GestureDetector(
-            onTap: (){
-              print("进入");
-              _focus.unfocus();
+                }, separatorBuilder: (context,index){
+              return SizedBox(width: 10,);
+            }, itemCount: 10) ,
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 5.h,bottom: 7.h),
+            height: 385.h,
+            child:  GestureDetector(
+              onTap: (){
+                print("进入");
+                _focus.unfocus();
 
-            },
-            child: ListView.separated(
-              itemBuilder: (context,index){
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.pushNamed(context, "/ChatLeft",arguments: {
-                      "title":"tang"
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10,right: 10),
-                    constraints:BoxConstraints(
-                        minHeight: 50,
-                        maxHeight: MediaQuery.of(context).size.height/7
-                    ) ,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,4.0),blurRadius: 2.0)],
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(flex: 7,child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            children: [
-                              SizedBox(width: 10,),
-                              CircleAvatar(
-                                minRadius: 15,
-                                maxRadius: 30,
-                                backgroundImage: NetworkImage(url),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Positioned(right: 3,bottom: -3,child: CircleAvatar(
-                                      radius: 10,
-                                      child: Container(decoration: BoxDecoration(
-                                          color:index ==1?Colors.greenAccent:Colors.redAccent,
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),),
-                                    ))
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 10,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Alia",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                                  Text("你住在哪里的呢？",style: TextStyle(color: Colors.black38)),
-                                ],)
-                            ],),
-                        )),
-                        Expanded(flex: 3,child:  Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20))
-                          ), child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+              },
+              child: ListView.separated(
+                  itemBuilder: (context,index){
+                    return GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, "/ChatLeft",arguments: {
+                          "title":"tang"
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10.w,right: 10.w),
+                        constraints:BoxConstraints(
+                            minHeight: 50.h,
+                            maxHeight: 90.h
+                        ) ,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,4.0),blurRadius: 2.0)],
+                            borderRadius: BorderRadius.circular(20.r)
+                        ),
+                        child: Row(
                           children: [
-                            Text("12:30",style: TextStyle(color: Colors.black38)),
-                            SizedBox(height: 5,),
-                            Container(
-                              padding: EdgeInsets.only(left: 5,right: 5),
+                            Expanded(flex: 7,child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(20.r),
                               ),
-                              child: Text("12",style: TextStyle(color: Colors.white),),
-                            ),
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 10.w,),
+                                  CircleAvatar(
+                                    minRadius: 15.r,
+                                    maxRadius: 30.r,
+                                    backgroundImage: NetworkImage(url),
+                                    child: Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        Positioned(right: 3.w,bottom: -3.h,child: CircleAvatar(
+                                          radius: 10.r,
+                                          child: Container(decoration: BoxDecoration(
+                                              color:index ==1?Colors.greenAccent:Colors.redAccent,
+                                              borderRadius: BorderRadius.circular(10.r)
+                                          ),),
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.w,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Alia",style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.bold),),
+                                      Text("你住在哪里的呢？",style: TextStyle(color: Colors.black38)),
+                                    ],)
+                                ],),
+                            )),
+                            Expanded(flex: 3,child:  Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(20.r),topRight: Radius.circular(20))
+                              ), child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("12:30",style: TextStyle(color: Colors.black38,fontSize: 10.sp)),
+                                SizedBox(height: 5.h,),
+                                Container(
+                                  padding: EdgeInsets.only(left: 5.w,right: 5.w),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  child: Text("12",style: TextStyle(color: Colors.white,fontSize: 12.sp),),
+                                ),
+                              ],
+                            ),)),
                           ],
-                        ),)),
-                      ],
-                    ),
-                  ),
-                );
-              }, separatorBuilder: (context,index){
-            return SizedBox(height: 10,);
-          }, itemCount: 10),)),
+                        ),
+                      ),
+                    );
+                  }, separatorBuilder: (context,index){
+                return SizedBox(height: 10.h,);
+              }, itemCount: 10),),
+          ),
         ],
       ),),
     ):loginPhone();

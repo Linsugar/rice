@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,37 +96,37 @@ class _Home2State extends ConsumerState<Home2> {
         ),
         title: Row(
           children: [
-            SizedBox(width: 30,),
-            FaIcon(FontAwesomeIcons.mapMarkerAlt,color: _cityColor,size: 16,),
-            SizedBox(width: 10,),
+            SizedBox(width: 30.w,),
+            FaIcon(FontAwesomeIcons.mapMarkerAlt,color: _cityColor,size: 16.sp,),
+            SizedBox(width: 10.w,),
             // Text("成都"),
-            Text(InfoValue==null?"成都":InfoValue.create_city),
-            SizedBox(width: 5,),
-            Text(InfoValue==null?"成都":InfoValue.username),
+            Text(InfoValue==null?"成都":InfoValue.create_city,style: TextStyle(fontSize: 14.sp),),
+            SizedBox(width: 5.w,),
+            Text(InfoValue==null?"小灰狼":InfoValue.username,style: TextStyle(fontSize: 16.sp),),
           ],
         ),
         actions: [
-          SizedBox(width: 10,),
           CircleAvatar(
+            radius: 18.r,
             backgroundImage: NetworkImage(InfoValue==null?url:InfoValue.profilePicture),
           ),
-          SizedBox(width: 10,)
+          SizedBox(width: 20.w,)
         ],
       ) ,
       drawer: DrawWidget(context),
       body: Padding(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(5.w),
         child: Flex(
           crossAxisAlignment: CrossAxisAlignment.start,
           direction: Axis.vertical,children: [
-            SizedBox(height: 10,),
+            SizedBox(height: 10.h,),
             Expanded(flex: 6,child: Stack(
             clipBehavior: Clip.none,
             children:[
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 boxShadow: [BoxShadow(color: Colors.black12,offset: Offset(0.0,3.0),blurRadius: 2.0)]
               ),
               child: Row(
@@ -139,14 +140,14 @@ class _Home2State extends ConsumerState<Home2> {
                   ),
                 )),
                 Expanded(flex: 6,child:Padding(
-                  padding: EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.only(right: 10.w),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Milo is Waiting",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                      Text("for the next walk",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                      SizedBox(height: 10,),
+                      Text("Milo is Waiting",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.sp),),
+                      Text("for the next walk",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.sp),),
+                      SizedBox(height: 10.h,),
                       LinearProgressIndicator(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,20 +155,20 @@ class _Home2State extends ConsumerState<Home2> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("1 Walk",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                              Text("left",style: TextStyle(color: Colors.blue),),
+                              Text("1 Walk",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.sp),),
+                              Text("left",style: TextStyle(color: Colors.blue,fontSize: 16.sp),),
                             ],
                           ),
                           MaterialButton(
                             color: Colors.blue,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
                             ///按钮点击下的颜色
                             highlightColor:Colors.deepPurple,
                             ///按钮的阴影
                             elevation: 2,
                             onPressed: (){
                               ShowWidget(context,_result);
-                            },child: Text("签到",style: TextStyle(color: Colors.white),),)
+                            },child: Text("签到",style: TextStyle(color: Colors.white,fontSize: 20.sp),),)
                         ],
                       )
 

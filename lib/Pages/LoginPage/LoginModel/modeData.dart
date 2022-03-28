@@ -10,12 +10,14 @@ class LoginModel{
    String ?Token;
   String UserId = "8563157";
    int invitePerson = 6666;
+   String userContent = "";
   String profilePicture = "http://cdn.tlapp.club/pet.png";
   LoginModel(value){
    CreatedAt = value["CreatedAt"];
     UpdatedAt = value["UpdatedAt"];
     DeletedAt = value["DeletedAt"];
     username = value["username"];
+   userContent = value["userContent"];
     phone = value["phone"];
     create_city = value["create_city"];
     CreateAddress = value["CreateAddress"];

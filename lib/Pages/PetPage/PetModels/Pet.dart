@@ -4,22 +4,22 @@ class PetModel{
   String CreatedAt = "";
   String UpdatedAt = "";
   String ?DeletedAt;
-  int PetID = 0;
+  num PetID = 0;
   String petMaster = "";
   String pet_name = "";
   String petCall = "";
   String petdetail = "";
   String petClass = "";
-  int petBuyer = 0;
+  num petBuyer = 0;
   String petPhoto = "";
   String pet_avatotr = "";
   String pet_video = "";
-  int petMoney = 0;
-  int ?petBuyMoney;
+  num petMoney = 0.0;
+  num ?petBuyMoney;
   String PetContent ="";
   num ?PetAge;                                                          //最终售卖价
   String ?PetGender;                                                  //最终售卖价
-  int ?PetWeight;                                                //最终售卖价
+  num ?PetWeight;                                                //最终售卖价
   String ?PetLocation;
   PetModel(value){
     print("进入pet model赋值");

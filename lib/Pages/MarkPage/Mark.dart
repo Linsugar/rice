@@ -105,8 +105,9 @@ Widget TabWidget(Size _size){
   return Consumer(
     builder: (BuildContext context, WidgetRef ref, Widget? child) {
       AsyncValue<List> value = ref.watch(futureMarKProvider);
+      print("value:$value");
       return value.when(data: (valueList)=>Container(
-        height: 490.h,
+        height: 465.h,
         child: ListView.separated(itemBuilder: (BuildContext context, int index){
           return Container(
             decoration: BoxDecoration(

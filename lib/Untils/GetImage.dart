@@ -17,14 +17,13 @@ class Creamer{
     }
 
   }
-  static  Future GetGrally(String token)async{
+  static  Future GetGrally()async{
     //使用相册
     try{
-      print("当前返回的token:$token");
       var result =  await _imagePicker.pickImage(source:ImageSource.gallery);
       // return result?.path;
       print("当前返回的result:${result!.path}");
-      var url= await QiuNiu().PusImage(result.path, token);
+      var url= await QiuNiu().PusImage(result.path);
       print("当前返回的url:${url.key}");
       return "http://cdn.tlapp.club/${url.key}";
 
