@@ -9,7 +9,7 @@ class LoginModel{
   String NowIp = "::1";
    String ?Token;
   String UserId = "8563157";
-   int invitePerson = 6666;
+   String invitePerson = "";
    String userContent = "";
   String profilePicture = "http://cdn.tlapp.club/pet.png";
   LoginModel(value){

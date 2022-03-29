@@ -10,10 +10,6 @@ class GlobalData{
   static final StateProvider ProtocolStatue = StateProvider((ref) => true);
   static final StateProvider LoginResult = StateProvider((ref) =>null);
   static final StateProvider ImagePet = StateProvider((ref) =>null);
-  final configProvider = FutureProvider((ref) async {
-    final content = json.decode(
-      await rootBundle.loadString('assets/configurations.json'),
-    ) as Map<String, Object?>;
-    return content;
-  });
+  static final StateProvider AndroidDeviceInfo = StateProvider((ref)=>null);
+  static final StateProvider IOSDeviceInfo = StateProvider((ref)=>null);
 }

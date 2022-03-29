@@ -202,7 +202,7 @@ class _PetState extends ConsumerState<Pet> {
                 ],
               );
             },itemCount: value.length,),
-          ), error: (error, stackTrace)=>Center(child: Text("有误"),), loading: ()=>Center(child: CircularProgressIndicator()));
+          ), error: (error, stackTrace)=>Center(child: Text("请登录-该功能不对外开放"),), loading: ()=>Center(child: CircularProgressIndicator()));
         },
       )),
       ],

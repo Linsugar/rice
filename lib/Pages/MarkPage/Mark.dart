@@ -108,50 +108,56 @@ Widget TabWidget(Size _size){
       print("value:$value");
       return value.when(data: (valueList)=>Container(
         height: 465.h,
-        child: ListView.separated(itemBuilder: (BuildContext context, int index){
-          return Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.blue,
-                boxShadow: [BoxShadow(color: Colors.black45,blurRadius: 3.0,offset: Offset(0.0,2.0))]
-            ),
-            height: 130.h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(flex: 3,child: Container(decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(valueList.isEmpty?image:valueList[index].thumb_url),
-                        fit: BoxFit.cover
-                    )
-                ),)),
-                Expanded(flex: 5,child: Container(
-                  padding: EdgeInsets.only(left: 10), child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: RefreshIndicator(
+          onRefresh: ()async{
+            ref.refresh(futureMarKProvider);
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("更新成功")));
+          },
+          child: ListView.separated(itemBuilder: (BuildContext context, int index){
+            return Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.blue,
+                  boxShadow: [BoxShadow(color: Colors.black45,blurRadius: 3.0,offset: Offset(0.0,2.0))]
+              ),
+              height: 130.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(flex: 3,child: Container(decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(valueList.isEmpty?image:valueList[index].thumb_url),
+                          fit: BoxFit.cover
+                      )
+                  ),)),
+                  Expanded(flex: 5,child: Container(
+                    padding: EdgeInsets.only(left: 10), child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
 
-                  children: [
-                    Text(valueList.isEmpty?"口碑生活":valueList[index].title,style: TextStyle(fontSize: 18),maxLines: 2,),
-                    SizedBox(height: 10,),
-                    Text(valueList.isEmpty?"本地生活服务平台":valueList[index].digest,maxLines: 2,style: TextStyle(overflow: TextOverflow.ellipsis),),
-                  ],
-                ),)),
-                SizedBox(width: 15.w,),
-                Expanded(flex:2,child: Container(child: RichText(
-                  text: TextSpan(
-                      children: [
-                        TextSpan(text: "查阅",recognizer: TapGestureRecognizer()..onTap=(){
-                          print("点击查询");
-                          Navigator.pushNamed(context, "/MarkWeb",arguments: valueList[index].url);
-                        }),
-                      ]
-                  ),
-                ),)),
-              ],
-            ),
-          );
-        }, separatorBuilder: (BuildContext context, int index){
-          return Divider();
-        }, itemCount:valueList.isEmpty?1:valueList.length),
+                    children: [
+                      Text(valueList.isEmpty?"口碑生活":valueList[index].title,style: TextStyle(fontSize: 18),maxLines: 2,),
+                      SizedBox(height: 10,),
+                      Text(valueList.isEmpty?"本地生活服务平台":valueList[index].digest,maxLines: 2,style: TextStyle(overflow: TextOverflow.ellipsis),),
+                    ],
+                  ),)),
+                  SizedBox(width: 15.w,),
+                  Expanded(flex:2,child: Container(child: RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(text: "查阅",recognizer: TapGestureRecognizer()..onTap=(){
+                            print("点击查询");
+                            Navigator.pushNamed(context, "/MarkWeb",arguments: valueList[index].url);
+                          }),
+                        ]
+                    ),
+                  ),)),
+                ],
+              ),
+            );
+          }, separatorBuilder: (BuildContext context, int index){
+            return Divider();
+          }, itemCount:valueList.isEmpty?1:valueList.length),
+        ),
       ), error: (err,stc)=>Center(child: Text("加载...")), loading: ()=>Center(child: CircularProgressIndicator(),));
     },
   );

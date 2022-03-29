@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rice/Network/requests.dart';
 import 'package:rice/Pages/HomePage/Home.dart';
+import 'package:rice/Pages/MarkPage/Mark.dart';
 import 'package:rice/ProviderData/GlobData.dart' as Glob;
 import 'package:rice/Untils/CommonUntil.dart';
+import '../PetPage/pet.dart';
 import 'LoginModel/modeData.dart';
 final StateProvider index = StateProvider((ref) => 0);
 
@@ -124,9 +126,10 @@ Widget loginForm(GlobalKey FromKey,TextEditingController U,TextEditingController
                 var res = await Request.setNetwork("UserCenter/user", data: {"phone":U.text,"password":P.text});
                 print("到的数据：${res["Result"]}");
                 if(res["Result"]["Token"]!=null){
-                  // LoginModel(res["result"]);
-                  ref.read(Glob.GlobalData.LoginResult.state).state =LoginModel(res["Result"]);
+                  ref.read(Glob.GlobalData.LoginResult.state).state = LoginModel(res["Result"]);
                   ref.read(Glob.GlobalData.loginStatue.state).state = true;
+                  ref.refresh(futurePetProvider);
+                  ref.refresh(futureMarKProvider);
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                     return Home();
                   }) , (route) => false);

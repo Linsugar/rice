@@ -1,4 +1,5 @@
 //首页
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -90,19 +91,54 @@ class _HomeState extends ConsumerState<Home> {
         controller: _pageController,
         children: TabList,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.black,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        currentIndex:ref.watch(_PageIndex.state).state,
-        onTap: (value){
-          _pageController.jumpToPage(value);
-          ref.read(_PageIndex.state).state = value;
-        },
-        items:barItem,
-      ),
-    );
+      // bottomNavigationBar: BottomNavigationBar(
+      //   selectedItemColor: Colors.blueAccent,
+      //   unselectedItemColor: Colors.black,
+      //   showUnselectedLabels: true,
+      //   type: BottomNavigationBarType.fixed,
+      //   currentIndex:ref.watch(_PageIndex.state).state,
+      //   onTap: (value){
+      //     _pageController.jumpToPage(value);
+      //     ref.read(_PageIndex.state).state = value;
+      //   },
+      //   items:barItem,
+      // ),
+      bottomNavigationBar: BottomNavyBar(
+      items:  [
+        BottomNavyBarItem(
+          icon: Icon(Icons.apps),
+          title: Text('首页',style: TextStyle(fontSize: 14.sp),),
+          activeColor: Colors.red,
+        ),
+        BottomNavyBarItem(
+            icon: FaIcon(FontAwesomeIcons.rocketchat),
+            title: Text('聊天',style: TextStyle(fontSize: 14.sp),),
+            activeColor: Colors.purpleAccent
+        ),
+        BottomNavyBarItem(
+            icon: FaIcon(FontAwesomeIcons.cat),
+            title: Text('宠物',style: TextStyle(fontSize: 14.sp),),
+            activeColor: Colors.pink
+        ),
+        BottomNavyBarItem(
+            icon: FaIcon(FontAwesomeIcons.book),
+            title: Text('论坛',style: TextStyle(fontSize: 14.sp),),
+            activeColor: Colors.green
+        ),
+        BottomNavyBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('我的',style: TextStyle(fontSize: 14.sp),),
+            activeColor: Colors.blue
+        ),
+      ],
+      selectedIndex: ref.watch(_PageIndex.state).state,
+      showElevation: true, // use this to remove appBar's elevation
+      onItemSelected: (index) => setState(() {
+        ref.read(_PageIndex.state).state  = index;
+    _pageController.animateToPage(index,
+    duration: Duration(milliseconds: 300), curve: Curves.ease);
+    }),
+    ));
   }
 }
 

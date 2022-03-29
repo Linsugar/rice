@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rice/ProviderData/GlobData.dart';
 
 import '../../Network/requests.dart';
 import '../../Untils/GetImage.dart';
@@ -73,9 +74,8 @@ Widget RegisterForm(){
                       controller: RegisterName,
                       maxLength: 6,
                       style: TextStyle(color: Colors.white),
-
                       validator: (value){
-                        if(value!.length>10 || value.length<5){
+                        if(value!.length>10 || value.isEmpty){
                           return "内容长度1-5";
                         }
                       },
@@ -103,9 +103,9 @@ Widget RegisterForm(){
                     child: TextFormField(
                       controller: RegisterPhone,
                       style: TextStyle(color: Colors.white),
-                      maxLength: 15,
+                      maxLength: 20,
                       validator: (value){
-                        if(value!.length>10 || value.length<5){
+                        if(value!.length>20 || value.isEmpty){
                           return "内容长度5-10";
                         }
                       },
@@ -130,7 +130,7 @@ Widget RegisterForm(){
                 Expanded(
                   child: TextFormField(
                     validator: (value){
-                      if(value!.length>6 || value.length<2){
+                      if(value!.length>6 || value.isEmpty){
                         return "验证码不能为空";
                       }
                     },
@@ -144,8 +144,16 @@ Widget RegisterForm(){
                         counterText: "",
                         filled: true,
                         fillColor: inputColor,
-                        suffixIcon: GestureDetector(onTap: (){
+                        suffixIcon: GestureDetector(onTap: ()async{
                           print("1111");
+                          if (RegisterPhone.text.isNotEmpty){
+                            var res = Request.getNetwork("UserConfig/CodeWith",params: {
+                              "phone":RegisterPhone.text,
+                              "devices":ref.read(GlobalData.AndroidDeviceInfo.state).state.androidId,
+                            });
+                            print("当前获取验证码的数据：$res");
+                          }
+                          print("请填好数据：");
                         },child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -167,7 +175,7 @@ Widget RegisterForm(){
                 Expanded(
                   child: TextFormField(
                     validator: (value){
-                      if(value!.length>10 || value.length<5){
+                      if(value!.length>10 || value.isEmpty){
                         return "密码长度5-11";
                       }
                     },
@@ -223,13 +231,14 @@ Widget RegisterForm(){
                     borderRadius: BorderRadius.circular(5.r)
                 ), child: MaterialButton(onPressed: ()async{
                   if((FormKey.currentState as FormState).validate()){
-                   var res = await Request.setNetwork("UserConfig/QiNiu",data: {
+                   var res = await Request.setNetwork("UserCenter/register",data: {
                       "phone":RegisterPhone.text,
                       "password":RegisterPwd.text,
                       "username":RegisterName.text,
                       "invitePerson":RegisterInvite.text,
                       "profilePicture":ref.watch(RegisterImage.state).state,
                       "UserCode":RegisterCode.text,
+                      "userDevice":ref.read(GlobalData.AndroidDeviceInfo.state).state.androidId
                     });
                    print("返回的结果：$res");
                   }

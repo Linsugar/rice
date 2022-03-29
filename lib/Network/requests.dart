@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rice/Untils/CommonUntil.dart';
 
 class Request{
@@ -16,15 +17,18 @@ class Request{
     onRequest:(options, handler) {
       print("进入拦截onRequest${options.data}");
       // LoadingShow.showLoading();
+      EasyLoading.show(status: '加载中...');
       return handler.next(options);
     },
     onResponse:(response,handler) {
       print("进入拦截onResponse${response.data}");
       // LoadingShow.disLoading();
+      EasyLoading.dismiss();
       return handler.next(response); // continue
     },
     onError: ( DioError e, ErrorInterceptorHandler handler,){
       // LoadingShow.disLoading();
+      EasyLoading.dismiss();
       print("进入拦截onError${e.error}");
     }
   ));
