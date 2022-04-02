@@ -13,7 +13,6 @@ import '../MarkPage/Mark.dart';
 import '../../ProviderData/GlobData.dart' as Glob;
 import 'Home2.dart';
 
-final  StateProvider<int> _PageIndex = StateProvider((ref)=>0);
 
 
 class Home extends ConsumerStatefulWidget  {
@@ -29,35 +28,11 @@ class _HomeState extends ConsumerState<Home> {
 
   PageController _pageController = PageController();
 
-
-  final List<BottomNavigationBarItem> barItem = [
-    BottomNavigationBarItem(
-      icon: FaIcon(FontAwesomeIcons.paw),
-      label: "首页",
-    ),
-    BottomNavigationBarItem(
-      icon: FaIcon(FontAwesomeIcons.commentDots),
-      label: "聊天",
-    ),
-    BottomNavigationBarItem(
-      icon: FaIcon(FontAwesomeIcons.video),
-      label: "寻宠",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.book),
-      label: "科普",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: "个人中心",
-    ),
-  ];
-
   @override
   void initState() {
     print("进入home");
     _pageController.addListener(() {
-      ref.read(_PageIndex.state).state = _pageController.page!.toInt();
+      ref.read(Glob.GlobalData.PageIndex.state).state = _pageController.page!.toInt();
     });
     // TODO: implement initState
     super.initState();
@@ -91,18 +66,6 @@ class _HomeState extends ConsumerState<Home> {
         controller: _pageController,
         children: TabList,
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   selectedItemColor: Colors.blueAccent,
-      //   unselectedItemColor: Colors.black,
-      //   showUnselectedLabels: true,
-      //   type: BottomNavigationBarType.fixed,
-      //   currentIndex:ref.watch(_PageIndex.state).state,
-      //   onTap: (value){
-      //     _pageController.jumpToPage(value);
-      //     ref.read(_PageIndex.state).state = value;
-      //   },
-      //   items:barItem,
-      // ),
       bottomNavigationBar: BottomNavyBar(
       items:  [
         BottomNavyBarItem(
@@ -131,11 +94,11 @@ class _HomeState extends ConsumerState<Home> {
             activeColor: Colors.blue
         ),
       ],
-      selectedIndex: ref.watch(_PageIndex.state).state,
+      selectedIndex: ref.watch(Glob.GlobalData.PageIndex.state).state,
       showElevation: true, // use this to remove appBar's elevation
       onItemSelected: (index) => setState(() {
-        ref.read(_PageIndex.state).state  = index;
-    _pageController.animateToPage(index,
+        ref.read(Glob.GlobalData.PageIndex.state).state  = index;
+       _pageController.animateToPage(index,
     duration: Duration(milliseconds: 300), curve: Curves.ease);
     }),
     ));

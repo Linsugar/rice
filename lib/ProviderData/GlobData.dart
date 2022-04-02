@@ -12,4 +12,5 @@ class GlobalData{
   static final StateProvider ImagePet = StateProvider((ref) =>null);
   static final StateProvider AndroidDeviceInfo = StateProvider((ref)=>null);
   static final StateProvider IOSDeviceInfo = StateProvider((ref)=>null);
+  static final  StateProvider<int> PageIndex = StateProvider((ref)=>0);
 }

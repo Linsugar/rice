@@ -69,7 +69,6 @@ class _PetState extends ConsumerState<Pet> {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -88,10 +87,10 @@ class _PetState extends ConsumerState<Pet> {
         )
       ],
       ),
-      body: Flex(direction: Axis.vertical,
+      body: Column(
       children: [
-        SizedBox(height: 5,),
-        Expanded(flex: 1,child: ListView.separated(
+        SizedBox(height: 5.h,),
+        Container(height: 30.h,child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context,index){
               return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child,){
@@ -101,10 +100,10 @@ class _PetState extends ConsumerState<Pet> {
                     ref.read(_selectIndex.state).state=index;
                   },
                   child: Container(
-                    width: _size.width/4,
+                    width: 70.w,
                     decoration: BoxDecoration(
                         color: ref.read(_selectIndex.state).state==index?_selectColor:_unselectColor,
-                        borderRadius: BorderRadius.circular(10)
+                        borderRadius: BorderRadius.circular(10.r)
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -119,9 +118,8 @@ class _PetState extends ConsumerState<Pet> {
             }, separatorBuilder: (context,index){
           return SizedBox(width: 10,);
         }, itemCount: animale.length)),
-
-      SizedBox(height: 5,),
-      Expanded(flex: 12,child: Consumer(
+        SizedBox(height: 5.h,),
+        Container(height:500.h,child: Consumer(
         builder: (  BuildContext context, WidgetRef ref, Widget? _,){
           AsyncValue<List> PetList = ref.watch(futurePetProvider);
           print("PetList:$PetList");
@@ -148,16 +146,16 @@ class _PetState extends ConsumerState<Pet> {
                       decoration: BoxDecoration(
                           boxShadow: [BoxShadow(color: Colors.black38,offset: Offset(0.0,2.0),blurRadius: 3.0)],
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(5)
+                          borderRadius: BorderRadius.circular(5.r)
                       ),
                       child: Column(
                         children: [
                           Expanded(flex: 9,child: Stack(
                             children: [
                               Container(
-                                margin: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5.w),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
+                                    borderRadius: BorderRadius.circular(5.r),
                                     image: DecorationImage(image: NetworkImage(value.isEmpty?url:value[index].pet_avatotr),fit: BoxFit.cover)),),
                               Positioned(
                                   top: 10,
@@ -174,7 +172,7 @@ class _PetState extends ConsumerState<Pet> {
                             ],
                           )),
                           Expanded(flex: 3,child: Container(
-                            padding: EdgeInsets.only(left: 5,right: 5),
+                            padding: EdgeInsets.only(left: 5.w,right: 5.w),
                             width: double.maxFinite,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,11 +183,11 @@ class _PetState extends ConsumerState<Pet> {
                                   children: [
                                     Text(value.isEmpty?"DutchPug":value[index].petdetail,style: TextStyle(fontWeight: FontWeight.w400 ,color: Colors.blueGrey),overflow: TextOverflow.clip,maxLines: 1,),
                                     Container(
-                                        padding: EdgeInsets.all(2),
+                                        padding: EdgeInsets.all(2.w),
                                         decoration: BoxDecoration(
                                             color: Color.fromRGBO(251,237, 237, 1),
-                                            borderRadius: BorderRadius.circular(5)
-                                        ),child: Text("2YRS",style: TextStyle(fontWeight: FontWeight.bold ,color: Colors.red,fontSize: 10.0),)),
+                                            borderRadius: BorderRadius.circular(5.r)
+                                        ),child: Text("2YRS",style: TextStyle(fontWeight: FontWeight.bold ,color: Colors.red,fontSize: 10.0.sp),)),
                                   ],)
 
                               ],),

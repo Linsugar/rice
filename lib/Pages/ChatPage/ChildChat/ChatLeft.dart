@@ -26,21 +26,22 @@ class _ChatLeftState extends ConsumerState<ChatLeft> {
       appBar: AppBar(title: Text(widget.content['title']),),
       body:Container(
         color: Colors.yellow,
+        height: 600.h,
         child: Column(
           children: [
             Container(
               width: 1.sw,
-              height: ScreenUtil().setHeight(200),
+              height: 200.h,
               color: Colors.black,
             ),
             Container(
               width: 1.sw,
-              height:ScreenUtil().setHeight(200),
+              height:200.h,
               color: Colors.blue,
             ),
             Container(
               width: 1.sw,
-              height: ScreenUtil().setHeight(290),
+              height: 200.h,
               color: Colors.black,
             ),
           ],

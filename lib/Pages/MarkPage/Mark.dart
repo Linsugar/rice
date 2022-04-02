@@ -107,7 +107,7 @@ Widget TabWidget(Size _size){
       AsyncValue<List> value = ref.watch(futureMarKProvider);
       print("value:$value");
       return value.when(data: (valueList)=>Container(
-        height: 465.h,
+        height: 475.h,
         child: RefreshIndicator(
           onRefresh: ()async{
             ref.refresh(futureMarKProvider);

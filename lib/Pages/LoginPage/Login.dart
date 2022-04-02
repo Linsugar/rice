@@ -1,8 +1,6 @@
 //登录页
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rice/Network/requests.dart';
 import 'package:rice/Pages/HomePage/Home.dart';
 import 'package:rice/Pages/MarkPage/Mark.dart';
@@ -19,15 +17,24 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
-  // final UseIndex = ProviderContainer();
   GlobalKey FormKey = GlobalKey<FormState>();
   TextEditingController PhoneController = TextEditingController();
   TextEditingController PwdController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +135,7 @@ Widget loginForm(GlobalKey FromKey,TextEditingController U,TextEditingController
                 if(res["Result"]["Token"]!=null){
                   ref.read(Glob.GlobalData.LoginResult.state).state = LoginModel(res["Result"]);
                   ref.read(Glob.GlobalData.loginStatue.state).state = true;
+                  ref.read(Glob.GlobalData.PageIndex.state).state = 0;
                   ref.refresh(futurePetProvider);
                   ref.refresh(futureMarKProvider);
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){

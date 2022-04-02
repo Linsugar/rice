@@ -8,6 +8,7 @@ class Request{
 //    baseUrl:'http://tlapp.club:8002/Jia/'
 //   baseUrl: "http://192.168.3.199:8000/v1"
   baseUrl: "http://192.168.3.199:8000/"
+  // baseUrl: "http://139.155.88.241:8222/"
 //    baseUrl: 'http://3ie5702133.wicp.vip/Jia/'
 ////    测试
 //    baseUrl: 'http://192.168.1.5:8000/Jia/',
